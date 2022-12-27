@@ -63,9 +63,11 @@
 .k-main-header .k-header-content .header-content-input .search-input:hover {
     border: 1px solid #1dce00 !important;
 }
-.k-main-header .k-header-content .header-content-input .search-input:focus{
+
+.k-main-header .k-header-content .header-content-input .search-input:focus {
     border: 1px solid #1dce00 !important;
 }
+
 .k-main-header .k-header-content .header-content-input .icon-search {
     position: absolute;
     right: 15px;
@@ -79,7 +81,7 @@
     align-items: center;
 }
 
-.k-main-header .k-header-content .header-button-addcamera {
+.k-main-header .k-header-content .header-button {
     height: 32px;
     display: flex;
     padding: 4.5px 19px;
@@ -87,22 +89,34 @@
     gap: 8px;
     border-radius: 10px;
     border: 1.5px solid #1dce00;
+
 }
 
-.k-main-header .k-header-content .header-button-addcamera .header-icon-addcamera {
+.k-main-header .k-header-content .header-button .header-button-icon {
     width: 20px;
     height: 20px;
     align-self: center;
 }
 
-.k-main-header .k-header-content .header-button-addcamera .header-text-addcamera {
+.k-main-header .k-header-content .header-button .header-button-text {
     font-family: 'Lexend Deca';
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 20px;
     text-align: center;
     color: #1dce00;
+}
+
+.k-main-header .k-header-content .header-button:hover {
+    background-color: #1dce00;
+    transition: all 0.5s ease-out;
+}
+
+.k-main-header .k-header-content .header-button:hover .header-button-text {
+    color: white;
+    font-weight: 700;
+
 }
 
 .k-main-header .k-header-content .header-notification {
