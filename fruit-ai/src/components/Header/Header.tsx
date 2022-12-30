@@ -6,11 +6,13 @@ import { Avatar, Button, Input } from 'antd'
 import { useState } from 'react'
 import Notification from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
+import AddCameraActive from '../../images/video_active_icon.png'
 import IconSearch from '../../images/icon_search.png'
 import UserIcon from '../../images/user_icon.png'
 import LoginModal from '../../pages/Login/LoginModal'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
+import AddCameraModel from '../../pages/Camera/AddCameraModel'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -23,6 +25,9 @@ export const Header = (props: MyProps) => {
     const [isLogin, setIsLogin] = useState<Boolean>(false) // Biến kiểm tra đã login hay chưa
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
+    const [isOpenAddCameraModal, setIsOpenAddCameraModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal add camera hay chưa
+
+    const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
@@ -36,6 +41,10 @@ export const Header = (props: MyProps) => {
         setIsOpenRegisterModal(!isOpenRegisterModal);
     };
 
+     // Hàm chuyển đổi trạng thái đóng mở modal registration
+     const toggleAddCameraModal = () => {
+        setIsOpenAddCameraModal(false);
+    };
     // Hàm đổi trạng thái đã login
     const toggleIsLogin = () => {
         setIsLogin(true)
@@ -55,10 +64,18 @@ export const Header = (props: MyProps) => {
                     {isLogin ?
                         // Nếu login rồi thì hiển thị giao diện đã login và ngược lại
                         <>
-                            <Button className='header-button'>
-                                <Icon className='header-button-icon' component={() => (<img src={AddCamera} />)} />
+                            <Button className='header-button'
+                                onMouseEnter={() => setCameraIcon(AddCameraActive)}
+                                onMouseLeave={() => setCameraIcon(AddCamera)}
+                                onClick={() => setIsOpenAddCameraModal(true)}
+                            >
+                                <Icon className='header-button-icon' component={() => (<img className='icon-add-camera' src={cameraIcon} />)} />
                                 <span className='header-button-text'>Thêm camera</span>
                             </Button>
+                            <AddCameraModel
+                                isOpenModal={isOpenAddCameraModal}
+                                toggleAddCameraModal={toggleAddCameraModal}
+                            />
                             <div className='header-notification'>
                                 <img className='header-icon-notification' src={Notification} />
                                 <div className='header-number-notification'>

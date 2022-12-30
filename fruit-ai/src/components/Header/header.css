@@ -82,6 +82,7 @@
 }
 
 .k-main-header .k-header-content .header-button {
+    width: 60%;
     height: 32px;
     display: flex;
     padding: 4.5px 19px;
@@ -96,6 +97,13 @@
     width: 20px;
     height: 20px;
     align-self: center;
+}
+
+.k-main-header .k-header-content .header-button .icon-add-camera {
+    width: 20px;
+    height: 20px;
+    align-self: center;
+    margin: 0 -5px;
 }
 
 .k-main-header .k-header-content .header-button .header-button-text {
