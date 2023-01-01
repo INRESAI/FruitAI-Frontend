@@ -15,13 +15,12 @@ const AddCameraModel = (props: MyProps) => {
             onOk={props.toggleAddCameraModal}
             onCancel={props.toggleAddCameraModal}
             footer={[
-                <Button key="back" onClick={props.toggleAddCameraModal}>
+                <Button className='btn-cancel' key="back" onClick={props.toggleAddCameraModal}>
                     Hủy bỏ
                 </Button>,
                 <Button className='btn-submit' key="submit" type="primary" onClick={props.toggleAddCameraModal}>
                     Tạo mới
                 </Button>,
-                
             ]}
         >
             <Form
@@ -55,11 +54,6 @@ const AddCameraModel = (props: MyProps) => {
                         <Input className='form-input' placeholder="Nhập ghi chú" />
                     </Form.Item>
                 </div>
-                {/* <Form.Item className='form-submit'>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Đăng nhập
-                    </Button>
-                </Form.Item> */}
             </Form>
         </Modal>
     )
