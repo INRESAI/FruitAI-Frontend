@@ -15,13 +15,13 @@ import './sideBar.css';
 const { Sider } = Layout;
 const SideBar: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const [itemOnClick, setItemOnClick] = useState<number>(1);
+    const [itemOnClick, setItemOnClick] = useState<string>('1');
 
     const items: MenuProps['items'] = [
         {
             label: (
                 <Link to='/'>
-                    <img src={itemOnClick !== 1 ?  OverViewIcon : OverViewActionIcon} alt='' />
+                    <img src={itemOnClick !== '1' ? OverViewIcon : OverViewActionIcon} alt='' />
                     <span>Tổng quan</span>
                 </Link>
             ),
@@ -30,7 +30,7 @@ const SideBar: React.FC = () => {
         {
             label: (
                 <Link to='/pack_manager'>
-                    <img src={itemOnClick !== 2 ?  PackIcon : PackActiveIcon} alt='' />
+                    <img src={itemOnClick !== '2' ? PackIcon : PackActiveIcon} alt='' />
                     <span>Lô</span>
                 </Link>
             ),
@@ -39,7 +39,7 @@ const SideBar: React.FC = () => {
         {
             label: (
                 <Link to='/camera_manager'>
-                    <img src={itemOnClick !== 3 ?  CameraIcon : CameraActiveIcon} alt='' />
+                    <img src={itemOnClick !== '3' ? CameraIcon : CameraActiveIcon} alt='' />
                     <span>Camera</span>
                 </Link>
             ),
@@ -48,7 +48,7 @@ const SideBar: React.FC = () => {
         {
             label: (
                 <Link to='/assist'>
-                    <img src={itemOnClick !== 4 ?  AssistIcon : AssistActiveIcon} alt='' />
+                    <img src={itemOnClick !== '4' ? AssistIcon : AssistActiveIcon} alt='' />
                     <span>Hỗ trợ</span>
                 </Link>
             ),
@@ -56,8 +56,21 @@ const SideBar: React.FC = () => {
         },
     ];
     useEffect(() => {
-        console.log(itemOnClick);
-    })
+        console.log(window.location.pathname);
+        // console.log(window.location.href);
+        if (window.location.pathname === '/pack_manager')
+            setItemOnClick('2')
+        if (window.location.pathname === '/camera_manager')
+            setItemOnClick('3')
+        if (window.location.pathname === '/assist')
+            setItemOnClick('4')
+        if(window.location.pathname === '/') 
+            setItemOnClick('1')
+    }, [window.location.pathname])
+    
+    // useEffect(() => {
+    //     const item = 
+    // })
 
     return (
         <Sider className='main-sidebar'>
@@ -65,10 +78,11 @@ const SideBar: React.FC = () => {
                 LOGO
             </Link>
             <Menu
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={[itemOnClick]}
+                selectedKeys={[itemOnClick]}
                 mode="inline"
                 items={items}
-                onClick={({ key }) => { setItemOnClick(parseInt(key)) }}
+                onClick={({ key }) => { setItemOnClick(key) }}
             />
         </Sider>
 

@@ -30,8 +30,6 @@ export const Header = (props: MyProps) => {
     const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
 
-
-
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
         setIsOpenLoginModal(!isOpenLoginModal);
