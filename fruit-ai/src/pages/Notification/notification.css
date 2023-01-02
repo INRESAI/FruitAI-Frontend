@@ -52,7 +52,7 @@
 }
 
 .notification-modal .ant-modal-content {
-    width: 350px !important;
+    width: 400px !important;
 }
 
 .notification-modal .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light {
@@ -95,8 +95,13 @@
 
 .notification-list .ant-list-item {
     padding: 10px 10px 10px 0px;
+    border: none;
 }
-
+.notification-list .ant-list-item:hover{
+    background-color: aliceblue;
+    cursor: pointer;
+    border-radius: 10px ;
+}
 .notification-list .notification-time {
     font-family: 'Lexend Deca';
     font-style: normal;
@@ -107,8 +112,11 @@
 }
 
 .notification-list.notification-new .rc-virtual-list-holder{
-    height: 275px;
+    height: 250px    !important;
 }
 .notification-list.notification-before .rc-virtual-list-holder{
-    height: 165px;
+    height: 165px !important;
+}
+.rc-virtual-list-scrollbar-thumb{
+    display: none;
 }

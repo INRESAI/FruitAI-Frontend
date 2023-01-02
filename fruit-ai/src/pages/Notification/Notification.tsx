@@ -1,12 +1,13 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { Avatar, Button, Checkbox, Form, Input, List, Menu, MenuProps, Modal, message } from 'antd';
+import { Avatar, Badge, Button, Checkbox, Form, Input, List, Menu, MenuProps, Modal, message } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import 'react-pro-sidebar/dist/css/styles.css';
 import './notification.css';
 import Sider from 'antd/es/layout/Sider';
 import MenuItem from 'antd/es/menu/MenuItem';
 import UnreadIcon from '../../images/icon_unread.png'
+import ExportIcon from '../../images/icon_export.png'
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
@@ -98,7 +99,7 @@ const Notification = (props: MyProps) => {
             >
                 <div className='notification-title'>
                     <div className='notification-title-text'>Thông báo</div>
-                    <MoreOutlined />
+                    <MoreOutlined style={{cursor: 'pointer'}}/>
                 </div>
                 <Sider className='notification-slider'>
                     <Menu
@@ -122,7 +123,10 @@ const Notification = (props: MyProps) => {
                                 {(item: UserItem) => (
                                     <List.Item key={item.email}>
                                         <List.Item.Meta
-                                            avatar={<Avatar src={item.picture.large} />}
+                                            avatar={
+                                                <Badge count={<img src={ExportIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
+                                                    <Avatar src={item.picture.large} />
+                                                </Badge>}
                                             title={<a href="https://ant.design">{item.name.last}</a>}
                                             description={<div>
                                                 <div className='notification-des'>{item.email}</div>
@@ -148,14 +152,21 @@ const Notification = (props: MyProps) => {
                                 onScroll={onScroll}
                             >
                                 {(item: UserItem) => (
-                                    <List.Item key={item.email}>
+                                    <List.Item
+                                        key={item.email}
+                                        onClick={() => console.log('baka')}>
                                         <List.Item.Meta
-                                            avatar={<Avatar src={item.picture.large} />}
+                                            avatar={
+                                                <Badge count={<img src={ExportIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
+                                                    <Avatar src={item.picture.large} />
+                                                </Badge>
+                                            }
                                             title={<a href="https://ant.design">{item.name.last}</a>}
                                             description={<div>
                                                 <div className='notification-des'>{item.email}</div>
                                                 <div className='notification-time'>1 phút trước</div>
                                             </div>}
+
                                         />
                                         <img src={UnreadIcon} />
                                     </List.Item>
