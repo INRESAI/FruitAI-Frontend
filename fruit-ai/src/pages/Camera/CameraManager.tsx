@@ -1,6 +1,6 @@
 import Title from "antd/es/typography/Title"
 import React, { useEffect, useState } from "react"
-import "./cameraManager.css"
+import "./style/cameraManager.css"
 import { Card, Image, List } from "antd";
 import Meta from "antd/es/card/Meta";
 import CameraImg1 from '../../images/camera_img_1.png'
@@ -19,6 +19,7 @@ import CameraImg13 from '../../images/camera_img_13.png'
 import CameraImg14 from '../../images/camera_img_14.png'
 import CameraImg15 from '../../images/camera_img_15.png'
 import CameraImg16 from '../../images/camera_img_16.png'
+import { Link } from "react-router-dom";
 
 const data = [
     {
@@ -103,16 +104,6 @@ const data = [
     },
 ];
 const CameraManager = () => {
-    const [isOpenCameraDetail, setIsOpenCameraDetail] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
-
-    // // Hàm chuyển đổi trạng thái đóng mở modal add camera
-    // const toggleAddCameraModal = () => {
-    //     setIsOpenAddCameraModal(false);
-    // };
-    useEffect(() => {
-        console.log(data);
-
-    })
 
     return (
         <div className="camera-manager-main">
@@ -123,20 +114,22 @@ const CameraManager = () => {
                 dataSource={data}
                 renderItem={(item) => (
                     <List.Item>
-                        <Card
-                            className="camera-manager-card"
-                            style={{ width: 300 }}
-                            hoverable
-                            cover={
-                                <Image width={300} preview={false} alt="example" src={item.img} />
-                            }
-                            // onClick={ }
-                        >
-                            <Meta title={item.title} description={item.context} />
-                        </Card>
+                        <Link to='/camera_detail'>
+                            <Card
+                                className="camera-manager-card"
+                                style={{ width: 300 }}
+                                hoverable
+                                cover={
+                                    <Image width={300} preview={false} alt="example" src={item.img} />
+                                }
+                            >
+                                <Meta title={item.title} description={item.context} />
+                            </Card>
+                        </Link>
                     </List.Item>
                 )}
             />
+
         </div>
     )
 }

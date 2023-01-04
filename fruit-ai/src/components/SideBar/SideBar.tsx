@@ -60,7 +60,7 @@ const SideBar: React.FC = () => {
         // console.log(window.location.href);
         if (window.location.pathname === '/pack_manager')
             setItemOnClick('2')
-        if (window.location.pathname === '/camera_manager')
+        if (window.location.pathname === '/camera_manager' || window.location.pathname === '/camera_detail')
             setItemOnClick('3')
         if (window.location.pathname === '/assist')
             setItemOnClick('4')
