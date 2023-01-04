@@ -175,3 +175,9 @@
     background-position: 50% 50%;
     cursor: pointer;
 }
+
+
+.ant-layout.ant-layout-has-sider.site-layout{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,5 +1,6 @@
-import { Container } from 'react-bootstrap'
+import { Layout } from 'antd'
 import { Route, Routes } from 'react-router-dom'
+import { Header } from './components/Header/Header'
 import SideBar from './components/SideBar/SideBar'
 import Assist from './pages/Assist'
 import CameraManager from './pages/Camera/CameraManager'
@@ -13,6 +14,7 @@ const { Content } = Layout;
 const App = () => (
     <Layout style={{ minHeight: '100vh' }}>
         <SideBar />
+
         <Layout className="site-layout">
             <Header />
             <Content style={{ margin: '0 16px' }}>

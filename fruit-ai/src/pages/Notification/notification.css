@@ -1,0 +1,122 @@
+.notification-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+.notification-title .notification-title-text {
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    color: #000000;
+}
+
+.notification-title .anticon.anticon-more {
+    font-size: 20px;
+    color: black;
+}
+
+.notification-category .notification-button {
+    height: 32px;
+    padding: 5.5px 6.5px;
+    margin-right: 7px;
+    border-radius: 30px;
+    border: 1.5px solid #1dce00;
+    text-align: center;
+    color: #1DCE00;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.notification-category .notification-button:hover {
+    background-color: #1dce00;
+    transition: all 0.3s ease-out;
+}
+
+.notification-category .notification-button:hover {
+    color: white;
+}
+
+.ant-modal.notification-modal {
+    display: flex;
+    width: 100% !important;
+    justify-content: end;
+    margin-top: -35px;
+}
+
+.notification-modal .ant-modal-content {
+    width: 400px !important;
+}
+
+.notification-modal .ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light {
+    display: flex;
+}
+
+.notification-modal .ant-layout-sider.ant-layout-sider-dark.notification-slider {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+}
+
+.notification-modal .ant-menu-item {
+    height: 30px;
+    font-size: 11px !important;
+}
+
+.notification-modal .ant-menu-item.ant-menu-item-only-child {
+    padding: 0px 5px !important;
+    width: 300px;
+    text-align: center;
+}
+
+.notification-modal .ant-menu-item-only-child:nth-child(2) {
+    width: 435px;
+}
+
+.notification-list .ant-avatar.ant-avatar-circle.ant-avatar-image {
+    height: 60px;
+    width: 60px;
+}
+
+.notification-list .notification-list-title {
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.notification-list .ant-list-item {
+    padding: 10px 10px 10px 0px;
+    border: none;
+}
+.notification-list .ant-list-item:hover{
+    background-color: aliceblue;
+    cursor: pointer;
+    border-radius: 10px ;
+}
+.notification-list .notification-time {
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #1DCE00;
+}
+
+.notification-list.notification-new .rc-virtual-list-holder{
+    height: 250px    !important;
+}
+.notification-list.notification-before .rc-virtual-list-holder{
+    height: 165px !important;
+}
+.rc-virtual-list-scrollbar-thumb{
+    display: none;
+}

@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import Icon from '@ant-design/icons'
-import { Avatar, Button, Input } from 'antd'
-import { useState } from 'react'
-import Notification from '../../images/Notification_icon.png'
+import { Avatar, Badge, Button, Input } from 'antd'
+import { useEffect, useState } from 'react'
+import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
 import AddCameraActive from '../../images/video_active_icon.png'
 import IconSearch from '../../images/icon_search.png'
@@ -13,6 +13,7 @@ import LoginModal from '../../pages/Login/LoginModal'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
 import AddCameraModel from '../../pages/Camera/AddCameraModel'
+import Notification from '../../pages/Notification/Notification'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -26,7 +27,7 @@ export const Header = (props: MyProps) => {
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
     const [isOpenAddCameraModal, setIsOpenAddCameraModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal add camera hay chưa
-
+    const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
@@ -41,9 +42,14 @@ export const Header = (props: MyProps) => {
         setIsOpenRegisterModal(!isOpenRegisterModal);
     };
 
-     // Hàm chuyển đổi trạng thái đóng mở modal registration
-     const toggleAddCameraModal = () => {
+    // Hàm chuyển đổi trạng thái đóng mở modal add camera
+    const toggleAddCameraModal = () => {
         setIsOpenAddCameraModal(false);
+    };
+
+    // Hàm chuyển đổi trạng thái đóng mở notification
+    const toggleNotification = () => {
+        setIsOpenNotification(false);
     };
     // Hàm đổi trạng thái đã login
     const toggleIsLogin = () => {
@@ -76,12 +82,18 @@ export const Header = (props: MyProps) => {
                                 isOpenModal={isOpenAddCameraModal}
                                 toggleAddCameraModal={toggleAddCameraModal}
                             />
-                            <div className='header-notification'>
-                                <img className='header-icon-notification' src={Notification} />
-                                <div className='header-number-notification'>
-                                    <span className='number-noti'>4</span>
-                                </div>
+                            <div className='header-notification' onClick={() => setIsOpenNotification(!isOpenNotification)}>
+                                {/* <div className='header-number-notification'> */}
+                                    {/* <span className='number-noti'>4</span> */}
+                                {/* </div> */}
+                                <Badge count={4}>
+                                    <img src={NotificationIcon} />
+                                </Badge>
                             </div>
+                            <Notification
+                                isOpenModal={isOpenNotification}
+                                toggleNotification={toggleNotification}
+                            />
                             <Avatar className='header-avatar' src={UserIcon} /></>
                         :
                         <>
