@@ -6,7 +6,7 @@ import {
   LoginOutlined,
   DeleteOutlined
 } from '@ant-design/icons';
-import './PackStyle.scss';
+import './PackStyle.css';
 import { Link } from 'react-router-dom';
 
 

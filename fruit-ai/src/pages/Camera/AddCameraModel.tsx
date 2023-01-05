@@ -1,7 +1,7 @@
 import React from 'react'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
-import '../Camera/addcameramodal.css'
+import '../Camera/style/addcameramodal.css'
 interface MyProps {
     isOpenModal: boolean;
     toggleAddCameraModal: () => void;

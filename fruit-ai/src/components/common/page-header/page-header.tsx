@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { withStyles, createStyles, lighten, makeStyles, Theme } from '@material-ui/core/styles';
-import { useState } from 'react';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { FC } from 'react';
 
 type PageHeaderProps = {
     pageTile: string;
