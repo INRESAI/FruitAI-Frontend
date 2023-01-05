@@ -2,14 +2,12 @@ import { Button, Table } from 'antd'
 import React, { useState } from 'react'
 import type { ColumnsType } from 'antd/es/table';
 import {
-  EditOutlined,
-  LoginOutlined,
-  DeleteOutlined
+    EditOutlined,
+    LoginOutlined,
+    DeleteOutlined
 } from '@ant-design/icons';
 import './PackStyle.css';
 import { Link } from 'react-router-dom';
-
-
 
 interface DataType {
     key: React.Key;
@@ -20,9 +18,9 @@ interface DataType {
     totalPack: number;
     exportedQuantity: number;
     remain: number;
-  }
-  
-  const columns: ColumnsType<DataType> = [
+}
+
+const columns: ColumnsType<DataType> = [
     {
         title: 'STT',
         dataIndex: 'orderByNumber',
@@ -45,32 +43,32 @@ interface DataType {
         dataIndex: 'estimatedExportedTime',
     },
     {
-      title: 'Tổng số sọt',
-      dataIndex: 'totalPack',
+        title: 'Tổng số sọt',
+        dataIndex: 'totalPack',
     },
     {
-      title: 'Đã xuất',
-      dataIndex: 'exportedQuantity',
+        title: 'Đã xuất',
+        dataIndex: 'exportedQuantity',
     },
     {
-      title: 'Còn lại',
-      dataIndex: 'remain',
+        title: 'Còn lại',
+        dataIndex: 'remain',
     },
     {
         title: "Thao tác",
         key: "action",
-        render: ()=>(
+        render: () => (
             <div>
-                <EditOutlined className='action'/>
-                <LoginOutlined className='action'/>
-                <DeleteOutlined className='action'/>
+                <EditOutlined className='action' />
+                <LoginOutlined className='action' />
+                <DeleteOutlined className='action' />
             </div>
         )
     }
-  ];
-  
-  const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
+];
+
+const data: DataType[] = [];
+for (let i = 0; i < 46; i++) {
     data.push({
         key: i,
         // name: `Edward King ${i}`,
@@ -80,38 +78,38 @@ interface DataType {
         orderByNumber: i,
         type: `Edward King ${i}`,
         importedTime: new Date(),
-        estimatedExportTime: new Date() ,
+        estimatedExportTime: new Date(),
         totalPack: 88,
         exportedQuantity: 88,
         remain: 0,
     });
-  }
+}
 
 const CPackManager = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [loading, setLoading] = useState(false);
-  
+
     const start = () => {
-      setLoading(true);
-      // ajax request after empty completing
-      setTimeout(() => {
-        setSelectedRowKeys([]);
-        setLoading(false);
-      }, 1000);
+        setLoading(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+            setSelectedRowKeys([]);
+            setLoading(false);
+        }, 1000);
     };
-  
+
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-      console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-      setSelectedRowKeys(newSelectedRowKeys);
+        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
     };
-  
+
     const rowSelection = {
-      selectedRowKeys,
-      onChange: onSelectChange,
+        selectedRowKeys,
+        onChange: onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
     return (
-        <div>
+        <div style={{ margin: '0px 16px' }}>
             <div className='main-title'>Danh sách lô ()</div>
             <div>
                 <div style={{ marginBottom: 16 }}>
