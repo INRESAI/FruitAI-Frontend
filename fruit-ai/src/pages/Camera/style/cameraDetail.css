@@ -9,6 +9,7 @@
 .camera-detail-main .camera-detail-left {
     width: 60%;
     padding: 30px 50px;
+    padding-right: 0;
 }
 
 .camera-detail-main .camera-detail-left .ant-image {
