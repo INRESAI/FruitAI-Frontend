@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { FC, useEffect, useState } from 'react';
 import ScaleLoader from "react-spinners/ScaleLoader";
 
-import { apiStreamingVideo } from '../../api/streaming-video'
+import { apiStreamingVideo } from '../../api/streaming-video';
 import { IPenData } from '../../types/pen';
 
 type VideoItemProps = {

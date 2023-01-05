@@ -19,17 +19,16 @@ const App = () => (
 
         <Layout className="site-layout">
             <Header />
-            <div style={{ margin: '0 16px' }}>
+            <Content style={{ margin: '0 16px' }}>
                 <Routes>
                     <Route path='/' element={<OverView />} />
                     <Route path='/pack_manager' element={<PackManager />} />
                     <Route path='/camera_manager' element={<CameraManager />} />
                     <Route path='/assist' element={<Assist />} />
                     <Route path='/camera_detail' element={<CameraDetail />} />
-                    <Route path='/statistic' element={<StatisticTypeOfFruitByDate/>}/>
+                    <Route path='/statistic' element={<StatisticTypeOfFruitByDate />} />
                 </Routes>
-            </div>
-            {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
+            </Content>
         </Layout>
     </Layout>
 )

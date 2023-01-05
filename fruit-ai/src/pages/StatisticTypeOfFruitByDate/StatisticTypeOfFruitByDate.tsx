@@ -1,5 +1,5 @@
 import React from 'react'
-import './StatisticStyle.scss'
+import './StatisticStyle.css'
 
 const StatisticTypeOfFruitByDate = () => {
 	return (

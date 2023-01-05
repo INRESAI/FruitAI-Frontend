@@ -7,7 +7,7 @@ import VideoItem from './video-item';
 
 import farmService from '../../services/farm';
 import { apiPen } from '../../api/pen';
-import { IPenData } from '../../types/pen'
+import { IPenData } from '../../types/pen';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
