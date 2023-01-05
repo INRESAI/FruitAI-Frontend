@@ -86,4 +86,5 @@ const fetcher = createApi();
 
 export {
     fetcher
-}
+};
+

@@ -1,22 +1,18 @@
 import { Layout } from 'antd'
+import 'antd/dist/reset.css'
 import { Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header/Header'
 import SideBar from './components/SideBar/SideBar'
 import Assist from './pages/Assist'
+import CameraDetail from './pages/Camera/CameraDetail'
 import CameraManager from './pages/Camera/CameraManager'
 import OverView from './pages/OverView'
-import 'antd/dist/reset.css'
-import CameraDetail from './pages/Camera/CameraDetail'
 import PackManager from './pages/Pack/PackManager'
-// import { Layout } from 'antd'
-// import { Header } from './components/Header/Header'
-import 'antd/dist/reset.css';
 import StatisticTypeOfFruitByDate from './pages/StatisticTypeOfFruitByDate/StatisticTypeOfFruitByDate'
 const { Content } = Layout;
 const App = () => (
     <Layout style={{ minHeight: '100vh' }}>
         <SideBar />
-
         <Layout className="site-layout">
             <Header />
             <Content style={{ margin: '0 16px' }}>

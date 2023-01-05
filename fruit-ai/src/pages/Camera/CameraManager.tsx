@@ -1,25 +1,24 @@
-import Title from "antd/es/typography/Title"
-import React, { useEffect, useState } from "react"
-import "./style/cameraManager.css"
 import { Card, Image, List } from "antd";
 import Meta from "antd/es/card/Meta";
-import CameraImg1 from '../../images/camera_img_1.png'
-import CameraImg2 from '../../images/camera_img_2.png'
-import CameraImg3 from '../../images/camera_img_3.png'
-import CameraImg4 from '../../images/camera_img_4.png'
-import CameraImg5 from '../../images/camera_img_5.png'
-import CameraImg6 from '../../images/camera_img_6.png'
-import CameraImg7 from '../../images/camera_img_7.png'
-import CameraImg8 from '../../images/camera_img_8.png'
-import CameraImg9 from '../../images/camera_img_9.png'
-import CameraImg10 from '../../images/camera_img_10.png'
-import CameraImg11 from '../../images/camera_img_11.png'
-import CameraImg12 from '../../images/camera_img_12.png'
-import CameraImg13 from '../../images/camera_img_13.png'
-import CameraImg14 from '../../images/camera_img_14.png'
-import CameraImg15 from '../../images/camera_img_15.png'
-import CameraImg16 from '../../images/camera_img_16.png'
+import Title from "antd/es/typography/Title";
 import { Link } from "react-router-dom";
+import CameraImg1 from '../../images/camera_img_1.png';
+import CameraImg10 from '../../images/camera_img_10.png';
+import CameraImg11 from '../../images/camera_img_11.png';
+import CameraImg12 from '../../images/camera_img_12.png';
+import CameraImg13 from '../../images/camera_img_13.png';
+import CameraImg14 from '../../images/camera_img_14.png';
+import CameraImg15 from '../../images/camera_img_15.png';
+import CameraImg16 from '../../images/camera_img_16.png';
+import CameraImg2 from '../../images/camera_img_2.png';
+import CameraImg3 from '../../images/camera_img_3.png';
+import CameraImg4 from '../../images/camera_img_4.png';
+import CameraImg5 from '../../images/camera_img_5.png';
+import CameraImg6 from '../../images/camera_img_6.png';
+import CameraImg7 from '../../images/camera_img_7.png';
+import CameraImg8 from '../../images/camera_img_8.png';
+import CameraImg9 from '../../images/camera_img_9.png';
+import "./style/cameraManager.css";
 
 const data = [
     {

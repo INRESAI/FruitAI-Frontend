@@ -1,6 +1,6 @@
-import { fetcher } from "./sender";
-import { CFG_BASE_URL } from '../constants/config'
+import { CFG_BASE_URL } from '../constants/config';
 import { IListAllPens } from '../types/pen';
+import { fetcher } from "./sender";
 
 export const apiPen = {
     getAllPen(params: any) {

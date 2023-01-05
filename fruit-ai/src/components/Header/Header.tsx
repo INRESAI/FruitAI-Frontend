@@ -3,17 +3,17 @@
 
 import Icon from '@ant-design/icons'
 import { Avatar, Badge, Button, Input } from 'antd'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
-import AddCameraActive from '../../images/video_active_icon.png'
 import IconSearch from '../../images/icon_search.png'
 import UserIcon from '../../images/user_icon.png'
+import AddCameraActive from '../../images/video_active_icon.png'
+import AddCameraModel from '../../pages/Camera/AddCameraModel'
 import LoginModal from '../../pages/Login/LoginModal'
+import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
-import AddCameraModel from '../../pages/Camera/AddCameraModel'
-import Notification from '../../pages/Notification/Notification'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -84,7 +84,7 @@ export const Header = (props: MyProps) => {
                             />
                             <div className='header-notification' onClick={() => setIsOpenNotification(!isOpenNotification)}>
                                 {/* <div className='header-number-notification'> */}
-                                    {/* <span className='number-noti'>4</span> */}
+                                {/* <span className='number-noti'>4</span> */}
                                 {/* </div> */}
                                 <Badge count={4}>
                                     <img src={NotificationIcon} />

@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { combineEpics } from "redux-observable";
-import {  BoostrapEpics, bootstrapReducer} from './controller';
+import { BoostrapEpics, bootstrapReducer } from './controller';
 import { LoginEpics, loginReducer } from "./controller/login.slice";
 
 const rootReducer = combineReducers({

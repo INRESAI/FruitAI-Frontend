@@ -1,15 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConsoleSqlOutlined } from '@ant-design/icons';
-import { format, parseISO } from 'date-fns'
+import { format, parseISO } from 'date-fns';
 import moment from 'moment';
-// import { ISchedule } from 'tui-calendar';
-// import { IMeetings } from './define-meetings';
-// import {
-//     InvalidNumberError, UnitNotEnoughError, ReadingConfig,
-//     parseNumberData, readNumber
-// } from 'read-vietnamese-number'
-
 class Utils {
 
     static setLocalStorage(key: string, value: unknown): void {
@@ -174,35 +166,35 @@ class Utils {
     }
     static getPageSize(windowSize: string): number {
         switch (windowSize) {
-        case "2xl":
-            return 15;
-        case "xl":
-            return 12;
-        case "lg":
-            return 12;
-        case "md":
-            return 12;
-        case "sm":
-            return 12;
-        default:
-            break;
+            case "2xl":
+                return 15;
+            case "xl":
+                return 12;
+            case "lg":
+                return 12;
+            case "md":
+                return 12;
+            case "sm":
+                return 12;
+            default:
+                break;
         }
         return 12
     }
     static getPageSizeAssign(windowSize: string): number {
         switch (windowSize) {
-        case "2xl":
-            return 8;
-        case "xl":
-            return 6;
-        case "lg":
-            return 6;
-        case "md":
-            return 6;
-        case "sm":
-            return 6;
-        default:
-            break;
+            case "2xl":
+                return 8;
+            case "xl":
+                return 6;
+            case "lg":
+                return 6;
+            case "md":
+                return 6;
+            case "sm":
+                return 6;
+            default:
+                break;
         }
         return 6
     }
@@ -293,15 +285,15 @@ class Utils {
         const dates = [];
         const currentDate = startDate;
         while (currentDate < endDate) {
-            dates.push(format(new Date(currentDate),"MM/dd/yyyy"));
+            dates.push(format(new Date(currentDate), "MM/dd/yyyy"));
             currentDate.setDate(currentDate.getDate() + 1);
             console.log(currentDate);
-            
+
         }
         if (includeEndDate) dates.push(endDate);
         return dates;
     };
-    static getTimeZoneLocal(): number{
+    static getTimeZoneLocal(): number {
         return new Date().getTimezoneOffset() / 60;
     }
 

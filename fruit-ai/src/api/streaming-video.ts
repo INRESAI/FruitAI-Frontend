@@ -1,5 +1,5 @@
+import { CFG_STREAMING_URL } from '../constants/config';
 import { fetcher } from "./sender";
-import { CFG_STREAMING_URL } from '../constants/config'
 
 export const apiStreamingVideo = {
     getStreamingVideoURL(pendId: string, clientUuid: string) {

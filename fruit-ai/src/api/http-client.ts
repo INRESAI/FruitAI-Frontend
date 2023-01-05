@@ -1,8 +1,8 @@
-import Utils from "../common/utils";
 import { throwError } from "rxjs";
 import { ajax, AjaxError, AjaxRequest, AjaxResponse } from "rxjs/ajax";
 import { Observable } from "rxjs/internal/Observable";
 import { catchError, map, retry } from "rxjs/operators";
+import Utils from "../common/utils";
 // import IdentityApi from "./identity/identity.api";
 
 /** types */
@@ -74,7 +74,7 @@ function mapResponseHeader(res: AjaxResponse) {
 //     })
 // }
 
-function handleError$(err: AjaxError):  Observable<unknown> {
+function handleError$(err: AjaxError): Observable<unknown> {
     // if(err){
     //     if(err.status === 401){
     //         handleRefreshToken();

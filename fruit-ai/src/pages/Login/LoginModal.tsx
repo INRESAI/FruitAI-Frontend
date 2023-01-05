@@ -1,7 +1,6 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import './login.css';
-import { Link } from 'react-router-dom';
 interface MyProps {
     isOpenModal: boolean;
     toggleLoginModal: () => void;

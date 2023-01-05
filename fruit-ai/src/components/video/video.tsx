@@ -1,12 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { FC, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 import PageHeader from '../common/page-header/page-header';
 import VideoItem from './video-item';
-
-import farmService from '../../services/farm';
 import { apiPen } from '../../api/pen';
+import farmService from '../../services/farm';
 import { IPenData } from '../../types/pen';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,12 +45,12 @@ const Video: FC = () => {
         }
 
         apiPen.getAllPen(params)
-        .then((res: any) => {
-            setPens(res.items);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res: any) => {
+                setPens(res.items);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     };
 
     return (
@@ -64,10 +62,10 @@ const Video: FC = () => {
             <div className={classes.videoList}>
                 {
                     pens.map((pen, index) => {
-                        return(
+                        return (
                             <>
                                 <div className={classes.videoItem}>
-                                    <VideoItem uuId={uuidv4()} pen={pen}/>
+                                    <VideoItem uuId={uuidv4()} pen={pen} />
                                 </div>
                             </>
                         )

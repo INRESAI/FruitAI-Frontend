@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootEpic, SystemConfig } from "../../common/define-type";
-import { filter, map, switchMap } from "rxjs/operators";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ajax } from "rxjs/ajax";
+import { filter, map, switchMap } from "rxjs/operators";
 import IdentityApi from "../../api/identity.api";
+import { RootEpic, SystemConfig } from "../../common/define-type";
 // import MailServiceAPI from "api/mail/mailservice.api";
 // import MeetingsApi from "api/meetings/meetings.api";
 // import MemberApi from "api/member/member.api";

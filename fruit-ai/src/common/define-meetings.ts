@@ -3,7 +3,7 @@ export interface MemberMeeting {
     roleId?: string;
 }
 
-export interface IGetMeetingsReq{
+export interface IGetMeetingsReq {
     title?: string;
     startTime: Date;
     endTime: Date;
@@ -20,15 +20,15 @@ export interface IMember {
     roleIdTemporary?: string;
 }
 
-export interface IMeetingAndRole{
+export interface IMeetingAndRole {
     meeting?: Omit<IMeetings, 'memberMeetings'>
 }
 
-export interface IMemberInMeetings extends IMember{
+export interface IMemberInMeetings extends IMember {
     memberMeetings: IMeetingAndRole[]
 }
 
-export interface IMemberWithRole extends IMember{
+export interface IMemberWithRole extends IMember {
     memberMeetings: IRole[]
 }
 

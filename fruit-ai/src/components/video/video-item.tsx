@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const VideoItem: FC<VideoItemProps> = ({ uuId, pen } : VideoItemProps) => {
+const VideoItem: FC<VideoItemProps> = ({ uuId, pen }: VideoItemProps) => {
     const classes = useStyles();
     const [streamingVideoURL, setStreamingVideoURL] = useState<string>("");
     const [loadingVideo, setLoadingVideo] = useState(true);
@@ -68,7 +68,7 @@ const VideoItem: FC<VideoItemProps> = ({ uuId, pen } : VideoItemProps) => {
             }
             {
                 streamingVideoURL.length > 0 && (
-                    <img src={streamingVideoURL} className={classes.video} onLoad={videoStreamingLoaded}/>
+                    <img src={streamingVideoURL} className={classes.video} onLoad={videoStreamingLoaded} />
                 )
             }
         </div>

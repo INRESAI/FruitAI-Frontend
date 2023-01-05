@@ -1,12 +1,11 @@
 /* eslint-disable */
-import SYSTEM_CONSTANTS from '../common/constants';
-import { IUser, LoginRequest, NewResponseLogin, RegisterRequest, ResponseDeparment, ResponseLogin } from '../common/define-identity';
+import JSEncrypt from 'jsencrypt';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map } from "rxjs/operators";
-import HttpClient from "./http-client";
-import JSEncrypt from 'jsencrypt';
-import { error } from 'console';
+import SYSTEM_CONSTANTS from '../common/constants';
+import { IUser, LoginRequest, RegisterRequest, ResponseDeparment } from '../common/define-identity';
 import { IDataResponse } from '../common/define-meetings';
+import HttpClient from "./http-client";
 export default class IdentityApi {
     static host = '';
     static encryptData(text: string, key: string) {
@@ -21,13 +20,13 @@ export default class IdentityApi {
         );
     }
 
-    static login(body: LoginRequest): Observable<IDataResponse<any> | null>{
+    static login(body: LoginRequest): Observable<IDataResponse<any> | null> {
         const api = `${IdentityApi.host}/${SYSTEM_CONSTANTS.API.IDENTITY.LOGIN}`;
         return HttpClient.post(api, body).pipe(
             map((res) => res as IDataResponse<IUser> || null, catchError((error) => new Observable)));
     }
 
-    static register(body: RegisterRequest): Observable<IDataResponse<any> | null>{
+    static register(body: RegisterRequest): Observable<IDataResponse<any> | null> {
         const api = `${IdentityApi.host}/${SYSTEM_CONSTANTS.API.IDENTITY.REGISTER}`;
         // console.log(body)
         return HttpClient.post(api, body).pipe(
@@ -35,17 +34,17 @@ export default class IdentityApi {
         );
     }
 
-    static deparmentId(token : any): Observable<ResponseDeparment | null>{
+    static deparmentId(token: any): Observable<ResponseDeparment | null> {
         const api = `${IdentityApi.host}/${SYSTEM_CONSTANTS.API.LISTHOTEL.DEPARTMENT}`;
-        return HttpClient.get(api,{ headers: { Authorization : `Bearer ${token}` } }).pipe(
+        return HttpClient.get(api, { headers: { Authorization: `Bearer ${token}` } }).pipe(
             map((res) => res as ResponseDeparment || null)
         )
     }
 
-    static forgotPassword(email: string): Observable<any | null>{
+    static forgotPassword(email: string): Observable<any | null> {
         const api = `${IdentityApi.host}/${SYSTEM_CONSTANTS.API.IDENTITY.FORGOT}/${email}/notify/passwordreset`;
         return HttpClient.post(api, {}).pipe(
             map((res) => res as any || null, catchError((error) => new Observable)));
-        
+
     }
 }
