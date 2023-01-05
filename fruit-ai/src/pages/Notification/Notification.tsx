@@ -2,7 +2,7 @@ import { MoreOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { Avatar, Badge, Button, Checkbox, Form, Input, List, Menu, MenuProps, Modal, message } from 'antd';
 import VirtualList from 'rc-virtual-list';
-import 'react-pro-sidebar/dist/css/styles.css';
+// import 'react-pro-sidebar/dist/css/styles.css';
 import './notification.css';
 import Sider from 'antd/es/layout/Sider';
 import MenuItem from 'antd/es/menu/MenuItem';
