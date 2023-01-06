@@ -7,14 +7,14 @@ import { LoginEpics, loginReducer } from "./controller/login.slice";
 const rootReducer = combineReducers({
     bootstrap: bootstrapReducer,
     login: loginReducer,
-    camera: cameraReducer
+    camera: cameraReducer,
     fruit: fruitReducer
 });
 
 export const rootEpic = combineEpics(
     ...BoostrapEpics,
     ...LoginEpics,
-    ...CameraEpics
+    ...CameraEpics,
     ...FruitEpics,
 );
 export type RootState = ReturnType<typeof rootReducer>;

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CopyOutlined, DownOutlined } from '@ant-design/icons'
 import { Button, Card, Image, List } from 'antd'
-import Meta from 'antd/es/card/Meta'
+// import Meta from 'antd/es/card/Meta'
 import Title from 'antd/es/typography/Title'
 import { useEffect, useState } from 'react'
 import CameraDetailImage from '../../images/camera_detail_img.png'

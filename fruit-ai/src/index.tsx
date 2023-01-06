@@ -8,9 +8,7 @@ import store, { persistor, useSelectorRoot } from './redux/store'
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import store, { persistor } from './redux/store';
+
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
