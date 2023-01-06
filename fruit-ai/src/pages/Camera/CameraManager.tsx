@@ -20,6 +20,7 @@ import CameraImg14 from '../../images/camera_img_14.png'
 import CameraImg15 from '../../images/camera_img_15.png'
 import CameraImg16 from '../../images/camera_img_16.png'
 import { Link } from "react-router-dom";
+import Video from "../../components/video/video";
 
 const data = [
     {
@@ -108,7 +109,10 @@ const CameraManager = () => {
     return (
         <div className="camera-manager-main">
             <Title className="camera-manager-title" level={3}>Danh sách camera</Title>
-            <List
+
+            <Video/>
+            
+            {/* <List
                 className="camera-manager-list"
                 grid={{ gutter: 16, column: 4 }}
                 dataSource={data}
@@ -128,7 +132,7 @@ const CameraManager = () => {
                         </Link>
                     </List.Item>
                 )}
-            />
+            /> */}
 
         </div>
     )

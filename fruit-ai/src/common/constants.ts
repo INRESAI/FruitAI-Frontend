@@ -39,6 +39,12 @@ const SYSTEM_CONSTANTS = {
     },
     IMAGE: {
         IMAGE_HOTEL: "dms/Document/file"
+    },
+    CAMERA_STREAM: {
+        STREAMING_CAMERA: (cameraId: string): string => `${cameraId}/streaming`,
+        RTC_CAMERA: (clientUuid: string) => `camera/clientUuid/${clientUuid}/rtcStreaming`,
+        RTC_CAMERA_NONE_AI: (clientUuid: string) => `camera/clientUuid/${clientUuid}/rtcStreamingNoneAI`,
+        ANALYSIS_CAMERA: (cameraId: string) => `camera/${cameraId}/analyse`
     }
 }
 
