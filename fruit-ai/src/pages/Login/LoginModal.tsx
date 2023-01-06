@@ -1,13 +1,24 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import './login.css';
+import { useDispatchRoot } from '../../redux/store';
+import { setIsLogin } from '../../redux/controller/fruir.slice';
 interface MyProps {
     isOpenModal: boolean;
     toggleLoginModal: () => void;
     toggleRegisterModal: () => void;
-    toggleIsLogin: () => void;
 }
 const LoginModal = (props: MyProps) => {
+
+    // const dispatch = useDispatchRoot();
+
+    const checkIsLogin = () => {
+        sessionStorage.setItem('isLogin', 'true');
+        // dispatch(setIsLogin(true));
+        props.toggleLoginModal();
+    }
+
+
     return (
         <Modal title="Đăng nhập"
             open={props.isOpenModal}
@@ -53,7 +64,7 @@ const LoginModal = (props: MyProps) => {
                 </Form.Item>
 
                 <Form.Item className='form-submit'>
-                    <Button onClick={props.toggleIsLogin} type="primary" htmlType="submit" className="login-form-button">
+                    <Button onClick={checkIsLogin}  type="primary" htmlType="submit" className="login-form-button">
                         Đăng nhập
                     </Button>
                     <div>Bạn chưa có tài khoản?

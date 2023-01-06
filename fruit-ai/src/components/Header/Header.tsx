@@ -3,7 +3,7 @@
 
 import Icon from '@ant-design/icons'
 import { Avatar, Badge, Button, Input } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
 import IconSearch from '../../images/icon_search.png'
@@ -14,6 +14,7 @@ import LoginModal from '../../pages/Login/LoginModal'
 import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
+import { useSelectorRoot } from '../../redux/store'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -23,12 +24,23 @@ interface MyProps {
 
 export const Header = (props: MyProps) => {
 
-    const [isLogin, setIsLogin] = useState<Boolean>(false) // Biến kiểm tra đã login hay chưa
+    const [isLogin, setIsLogin] = useState<string>('')
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
     const [isOpenAddCameraModal, setIsOpenAddCameraModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal add camera hay chưa
     const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
+    const { sliceIsLogin } = useSelectorRoot((item) => item.fruit);
+
+    // useEffect(() => { 
+    //     console.log('---check login', sliceIsLogin);
+    // }, [sliceIsLogin])
+    useEffect(() => {
+        const checkLogin = sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : ''
+        if (checkLogin) {
+            setIsLogin(checkLogin);
+        }
+    });
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
@@ -51,10 +63,7 @@ export const Header = (props: MyProps) => {
     const toggleNotification = () => {
         setIsOpenNotification(false);
     };
-    // Hàm đổi trạng thái đã login
-    const toggleIsLogin = () => {
-        setIsLogin(true)
-    }
+
     return (
         <div className='k-main-header'>
             <div className='k-header-content'>
@@ -107,7 +116,6 @@ export const Header = (props: MyProps) => {
                                 isOpenModal={isOpenLoginModal}
                                 toggleLoginModal={toggleLoginModal}
                                 toggleRegisterModal={toggleRegisterModal}
-                                toggleIsLogin={toggleIsLogin}
                             />
                             <RegisterModal
                                 isOpenModal={isOpenRegisterModal}
