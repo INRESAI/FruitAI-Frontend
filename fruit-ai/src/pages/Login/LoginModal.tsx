@@ -1,8 +1,10 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
+import { useEffect } from 'react';
+import { LoginRequest } from '../../common/define-identity';
+import { loginRequest } from '../../redux/controller/login.slice';
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
 import './login.css';
-import { useDispatchRoot } from '../../redux/store';
-import { setIsLogin } from '../../redux/controller/fruir.slice';
 interface MyProps {
     isOpenModal: boolean;
     toggleLoginModal: () => void;
@@ -11,13 +13,19 @@ interface MyProps {
 const LoginModal = (props: MyProps) => {
 
     // const dispatch = useDispatchRoot();
+    const dispatch = useDispatchRoot();
+    const isSuccess = useSelectorRoot(state => (state.login.statusCode));
 
-    const checkIsLogin = () => {
-        sessionStorage.setItem('isLogin', 'true');
-        // dispatch(setIsLogin(true));
-        props.toggleLoginModal();
+    useEffect(() => {
+        const userToken = localStorage.getItem('token');
+        console.log(isSuccess)
+        if (isSuccess === "OK" && userToken !== null && userToken !== undefined) {
+            props.toggleLoginModal();
+        }
+    }, [isSuccess])
+    const onFinish = async (account: LoginRequest): Promise<any> => {
+        dispatch(loginRequest(account));
     }
-
 
     return (
         <Modal title="Đăng nhập"
@@ -30,6 +38,8 @@ const LoginModal = (props: MyProps) => {
                 name="normal_login"
                 className="login-form"
                 initialValues={{ remember: true }}
+                onFinish={(item) => onFinish(item)}
+
             >
                 <div>
                     <span className='form-span-text'>Email/sdt <strong style={{ color: 'red' }}>(*)</strong></span>
@@ -64,7 +74,7 @@ const LoginModal = (props: MyProps) => {
                 </Form.Item>
 
                 <Form.Item className='form-submit'>
-                    <Button onClick={checkIsLogin}  type="primary" htmlType="submit" className="login-form-button">
+                    <Button type="primary" htmlType="submit" className="login-form-button">
                         Đăng nhập
                     </Button>
                     <div>Bạn chưa có tài khoản?

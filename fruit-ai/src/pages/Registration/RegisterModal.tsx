@@ -96,7 +96,7 @@ const RegisterModal = (props: MyProps) => {
                             Đăng ký
                         </Button>
                         <div>Bạn đã có tài khoản?
-                            <Button onClick={props.toggleLoginModal} type="link" className='form-span-text' style={{ color: '#1dce00', marginLeft: '-10px' }}>Đăng ký</Button>
+                            <Button onClick={props.toggleLoginModal} type="link" className='form-span-text' style={{ color: '#1dce00', marginLeft: '-10px' }}>Đăng nhập</Button>
                         </div>
                     </Form.Item>
                 </Form>

@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import Icon from '@ant-design/icons'
-import { Avatar, Badge, Button, Input } from 'antd'
+import { Avatar, Badge, Button, Dropdown, Input, MenuProps } from 'antd'
 import { useEffect, useState } from 'react'
 import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
@@ -15,6 +15,7 @@ import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
 import { useSelectorRoot } from '../../redux/store'
+import Utils from '../../common/utils'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -30,17 +31,52 @@ export const Header = (props: MyProps) => {
     const [isOpenAddCameraModal, setIsOpenAddCameraModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal add camera hay chưa
     const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
-    const { sliceIsLogin } = useSelectorRoot((item) => item.fruit);
+    const [userName, setUserName] = useState<string>('')
+    const [userEmail, setUserEmail] = useState<string>('')
 
-    // useEffect(() => { 
-    //     console.log('---check login', sliceIsLogin);
-    // }, [sliceIsLogin])
     useEffect(() => {
-        const checkLogin = sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : ''
+        const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
         if (checkLogin) {
             setIsLogin(checkLogin);
+            const usermail = localStorage.getItem('userEmail') ? localStorage.getItem('userEmail') : '';
+            const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+            setUserEmail(usermail ? usermail : '');
+            setUserName(username ? username : '');
         }
     });
+    const onClickLogout = () => {
+        Utils.removeItemLocalStorage('token');
+        Utils.removeItemLocalStorage('userEmail');
+        Utils.removeItemLocalStorage('userName');
+        Utils.removeItemLocalStorage('userId');
+        setIsLogin('')
+    }
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <div >
+                    Tên: {userName}
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <div >
+                    Email: {userEmail}
+                </div>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <div onClick={onClickLogout}>
+                    Đăng xuất
+                </div>
+            ),
+        },
+    ];
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
@@ -103,7 +139,11 @@ export const Header = (props: MyProps) => {
                                 isOpenModal={isOpenNotification}
                                 toggleNotification={toggleNotification}
                             />
-                            <Avatar className='header-avatar' src={UserIcon} /></>
+                            <Dropdown menu={{ items }} placement="bottomLeft" arrow>
+                                <Avatar className='header-avatar' src={UserIcon} />
+                            </Dropdown>
+
+                        </>
                         :
                         <>
                             <Button className='header-button' style={{ marginRight: 15 }} onClick={() => setIsOpenLoginModal(true)}>

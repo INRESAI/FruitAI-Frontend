@@ -163,11 +163,13 @@ export interface LoginRequest {
     email: string,
     password: string,
     remember: boolean,
+    additionalProp1: {}
 }
 
 export interface IUser {
     id: string,
     email: string,
+    name: string,
 }
 
 export interface RegisterRequest {

@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { catchError, filter, mergeMap, switchMap } from "rxjs/operators";
+import { IWareHouse, WarehouseRequest } from "../../common/define-fruit";
+import { RootEpic } from "../../common/define-type";
+import FruitAPI from "../../api/fruit.api";
 interface FruitState {
+    sliceLstWarehouses: IWareHouse[],
     message: string,
     loading: boolean,
-    sliceIsLogin: boolean,
     successRes: any,
     failRes: any
 }
 const initialStateBootstrap: FruitState = {
+    sliceLstWarehouses: [],
     message: '',
     loading: false,
-    sliceIsLogin: false,
     successRes: null,
     failRes: null
 }
@@ -19,38 +22,45 @@ const fruitSlice = createSlice({
     name: 'fruit',
     initialState: initialStateBootstrap,
     reducers: {
-        setIsLogin: (state, action: PayloadAction<boolean>) => {
-            state.sliceIsLogin = action.payload
-            console.log('----check login state----');
-            console.log(action.payload);
+        // setIsLogin: (state, action: PayloadAction<boolean>) => {
+        //     state.sliceIsLogin = action.payload
+        //     console.log('----check login state----');
+        //     console.log(action.payload);
+
+        // },
+        // Get task Request
+        getAllWarehouseByUserIdRequest: (state, action: PayloadAction<WarehouseRequest>) => {
+            state.loading = true;
+            console.log('----check request get all WarehouseByUserId----');
             
         },
-        // Get task Request
-        getTasksRequest: (state, action: PayloadAction<any>) => {
-
+        getAllWarehouseByUserIdSuccess: (state, action: PayloadAction<IWareHouse[]>) => {
+            state.sliceLstWarehouses = action.payload;
+            state.loading = false;
+            console.log('----success get all Warehouse By User Id----')
+            console.log(action.payload);
         },
-        getTasksSuccess: (state, action: PayloadAction<any>) => {
-
-        },
-        getTasksFailed(state, action: PayloadAction<boolean>) {
+        getAllWarehouseByUserIdFailed(state, action: PayloadAction<boolean>) {
+            state.loading = action.payload;
+            console.log('----------failed get all Warehouse By User Id----------')
 
         },
     }
 })
-// const getTasks$: RootEpic = action$ =>
-//     action$.pipe(filter(getTasksRequest.match),
-//         switchMap((re) => {
-//             return MeetingsApi.getTasks(re.payload).pipe(
-//                 mergeMap((res: any) => {
-//                     return [calendarSlice.actions.getTasksSuccess(res.data.items)];
-//                 }),
-//                 catchError(err => {
-//                     console.log(err)
-//                     return [calendarSlice.actions.getTasksFailed(false)]
-//                 }),
-//             );
-//         }),
-//     );
+const getAllWarehouseByUserId$: RootEpic = action$ =>
+    action$.pipe(filter(getAllWarehouseByUserIdRequest.match),
+        switchMap((re) => {
+            return FruitAPI.getWarehousesByUserId(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [fruitSlice.actions.getAllWarehouseByUserIdSuccess(res.data.items)];
+                }),
+                catchError(err => {
+                    console.log(err)
+                    return [fruitSlice.actions.getAllWarehouseByUserIdFailed(false)]
+                }),
+            );
+        }),
+    );
 // const getTasksByName$: RootEpic = action$ =>
 //     action$.pipe(filter(getTasksByNameRequest.match),
 //         switchMap((re) => {
@@ -84,10 +94,10 @@ const fruitSlice = createSlice({
 //     );
 
 export const FruitEpics = [
-
+    getAllWarehouseByUserId$,
 ];
 
 export const {
-    setIsLogin
+    getAllWarehouseByUserIdRequest
 } = fruitSlice.actions;
 export const fruitReducer = fruitSlice.reducer;

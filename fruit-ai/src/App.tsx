@@ -19,7 +19,7 @@ const App = () => {
     const [isLogin, setIsLogin] = useState<string>('')
 
     useEffect(() => {
-        const checkLogin = sessionStorage.getItem('isLogin') ? sessionStorage.getItem('isLogin') : ''
+        const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
         if (checkLogin) {
             setIsLogin(checkLogin);
         }

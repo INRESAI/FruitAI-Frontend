@@ -7,7 +7,7 @@ import { IUser, LoginRequest, RegisterRequest, ResponseDeparment } from '../comm
 import { IDataResponse } from '../common/define-meetings';
 import HttpClient from "./http-client";
 export default class IdentityApi {
-    static host = '';
+    static host = 'http://178.128.19.31:3003';
     static encryptData(text: string, key: string) {
         const jsEncrypt = new JSEncrypt();
         jsEncrypt.setPublicKey(key)

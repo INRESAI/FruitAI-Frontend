@@ -35,6 +35,9 @@ const SYSTEM_CONSTANTS = {
         },
         MAIL_SERVICE: {
             MEETING_INVITATION: 'meetingInvitation'
+        },
+        WARE_HOUSE: {
+            GET_WAREHOUSE_BY_USERID: 'warehouses/ownerId',
         }
     },
     IMAGE: {

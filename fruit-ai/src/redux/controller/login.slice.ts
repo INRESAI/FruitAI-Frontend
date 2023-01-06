@@ -8,7 +8,6 @@ import IdentityApi from "../../api/identity.api";
 import { IUser, LoginRequest, RegisterRequest, ResponseDeparment } from "../../common/define-identity";
 import { RootEpic } from "../../common/define-type";
 import Utils from "../../common/utils";
-// import openNotification, { NotificationType } from "../../common/notification/Notification";
 
 type MessageLogin = {
     content: string;
@@ -50,35 +49,42 @@ const loginSlice = createSlice({
         },
         loginSuccess(state, action: PayloadAction<{ user: IUser, token: string }>) {
             Utils.setLocalStorage('token', action.payload.token);
+            Utils.setLocalStorage('userId', action.payload.user.id)
+            Utils.setLocalStorage('userEmail', action.payload.user.email)
+            Utils.setLocalStorage('userName', action.payload.user.name)
+
             // state.loading = false;
             // Utils.setLocalStorage("email", action.payload.user.email);
             // Utils.setLocalStorage("id", action.payload.user.id);
             // Utils.setLocalStorage("password", action.payload.user.password);
             // Utils.setLocalStorage("refresh_token", action.payload.refresh_token)
             // Utils.setLocalStorage("email", action.payload.user.)
-            Utils.setLocalStorage("userEmail", action.payload.user.email)
             // Utils.setLocalStorage("expires", action.payload.expires_token)
             state.user = action.payload.user
             state.loading = false
             state.isSuccess = true;
+            notification.open({
+                message: 'Đăng nhập thành công',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+                style: {
+                    marginTop: 40
+                }
+            });
         },
         loginFail(state, action: any) {
             console.log(action);
-            if (action.payload.response === null) notification.open({
-                message: 'Đăng nhập không thành công',
-                description:
-                    'Hãy kiểm tra kết nối mạng.',
-                onClick: () => {
-                    console.log('Notification Clicked!');
-                },
-            });
             notification.open({
                 message: 'Đăng nhập không thành công',
                 description:
-                    action.payload.response.message,
+                    'Hãy kiểm tra lại thông tin đăng nhập.',
                 onClick: () => {
                     console.log('Notification Clicked!');
                 },
+                style: {
+                    marginTop: 40
+                }
             });
             state.message = action.payload.message
         },
@@ -175,15 +181,18 @@ const login$: RootEpic = (action$) => action$.pipe(
             "email": re.payload.email,
             "password": re.payload.password,
             "remember": re.payload.remember,
+            "additionalProp1": {},
         };
+
         return IdentityApi.login(body).pipe(
             mergeMap((res: any) => {
                 console.log(res);
                 console.log(res.data.accessToken);
                 const token = res.data.accessToken
                 const user: IUser = {
-                    email: res.data.email,
                     id: res.data.id,
+                    email: res.data.email,
+                    name: res.data.name,
                 };
                 console.log(user);
                 return [
@@ -192,7 +201,9 @@ const login$: RootEpic = (action$) => action$.pipe(
                     loginSlice.actions.setStatusCode(res.statusCode)
                 ];
             }),
-            catchError(err => [loginSlice.actions.loginFail(err)])
+            catchError(err =>
+                [loginSlice.actions.loginFail(err)]
+            )
         )
     })
 )
