@@ -1,13 +1,12 @@
 import { MoreOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
-import { Avatar, Badge, Button, Checkbox, Form, Input, List, Menu, MenuProps, Modal, message } from 'antd';
+import { Avatar, Badge, Form, List, Menu, MenuProps, Modal } from 'antd';
 import VirtualList from 'rc-virtual-list';
+import { useEffect, useState } from 'react';
 // import 'react-pro-sidebar/dist/css/styles.css';
-import './notification.css';
 import Sider from 'antd/es/layout/Sider';
-import MenuItem from 'antd/es/menu/MenuItem';
-import UnreadIcon from '../../images/icon_unread.png'
-import ExportIcon from '../../images/icon_export.png'
+import ExportIcon from '../../images/icon_export.png';
+import UnreadIcon from '../../images/icon_unread.png';
+import './notification.css';
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
@@ -99,7 +98,7 @@ const Notification = (props: MyProps) => {
             >
                 <div className='notification-title'>
                     <div className='notification-title-text'>Thông báo</div>
-                    <MoreOutlined style={{cursor: 'pointer'}}/>
+                    <MoreOutlined style={{ cursor: 'pointer' }} />
                 </div>
                 <Sider className='notification-slider'>
                     <Menu

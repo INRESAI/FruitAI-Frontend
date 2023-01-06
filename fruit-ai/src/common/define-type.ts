@@ -214,7 +214,7 @@ export interface Role {
     name: string
 }
 
-export interface Paging{
+export interface Paging {
     offset: number,
     size: number
 }
@@ -226,14 +226,14 @@ export interface MemberMeeting {
     roleID: string
 }
 
-export interface GetAllMemberReq extends Paging{
+export interface GetAllMemberReq extends Paging {
     startTime: Date,
     endTime: Date
 }
 
-export interface GetAllMembersWithRoleReq extends Paging{
+export interface GetAllMembersWithRoleReq extends Paging {
 
 }
-export interface GetAllTaskReq extends Paging{
+export interface GetAllTaskReq extends Paging {
     name?: string
 }

@@ -1,6 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import { combineEpics } from "redux-observable";
-import {  BoostrapEpics, bootstrapReducer} from './controller';
+import { BoostrapEpics, FruitEpics, bootstrapReducer, fruitReducer } from './controller';
 import { CameraEpics, cameraReducer } from "./controller/camera.slice";
 import { LoginEpics, loginReducer } from "./controller/login.slice";
 
@@ -8,14 +8,14 @@ const rootReducer = combineReducers({
     bootstrap: bootstrapReducer,
     login: loginReducer,
     camera: cameraReducer
-    // calendar: calendarReducer
+    fruit: fruitReducer
 });
 
 export const rootEpic = combineEpics(
     ...BoostrapEpics,
     ...LoginEpics,
     ...CameraEpics
-    // ...CalendarEpics
+    ...FruitEpics,
 );
 export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

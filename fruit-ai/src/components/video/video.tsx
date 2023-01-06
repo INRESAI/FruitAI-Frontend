@@ -389,6 +389,7 @@ const Video: FC = () => {
                 {
                     pens.map((pen, index) => {
                         return (
+                        return (
                             <>
                                 <div className={classes.videoItem}>
                                     <VideoItem uuId={uuidv4()} camId={pen.cameras[0]?.id} width='300' height='300' />

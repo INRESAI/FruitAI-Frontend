@@ -1,9 +1,9 @@
 // import { DataForeservation } from "./define-api-booking";
 
-export interface ResponseDeparment{
+export interface ResponseDeparment {
     id: number,
     tingId: string,
-    dateOfBirth:string,
+    dateOfBirth: string,
     departmentId: number,
     startDate: string,
     endDate: string,
@@ -19,38 +19,38 @@ export interface ResponseDeparment{
     status: number,
     mood: string,
     contactDetail: {
-      employeeId: number,
-      mask: number,
-      addressStreet1: string,
-      addressStreet2: string,
-      city: string,
-      country: string,
-      homePhone: string,
-      mobile: string,
-      otherEmail: string,
-      workEmail: string,
-      workPhone: string,
-      zipCode: string
+        employeeId: number,
+        mask: number,
+        addressStreet1: string,
+        addressStreet2: string,
+        city: string,
+        country: string,
+        homePhone: string,
+        mobile: string,
+        otherEmail: string,
+        workEmail: string,
+        workPhone: string,
+        zipCode: string
     },
     companies: [
         number
     ],
     jobs: [
-      {
-        id: number,
-        employeeId: number,
-        categoryId: number,
-        startDate: string,
-        endDate: string,
-        location: string,
-        salary: number,
-        specification: string,
-        status: number,
-        supervisorId: number,
-        titleId: number
-      }
+        {
+            id: number,
+            employeeId: number,
+            categoryId: number,
+            startDate: string,
+            endDate: string,
+            location: string,
+            salary: number,
+            specification: string,
+            status: number,
+            supervisorId: number,
+            titleId: number
+        }
     ]
-  }
+}
 
 // export interface ResponseListHotel {
 //     id: number,
@@ -159,18 +159,20 @@ export interface NewResponseLogin {
     };
 }
 
-export interface LoginRequest{
+export interface LoginRequest {
     email: string,
     password: string,
     remember: boolean,
+    additionalProp1: {}
 }
 
-export interface IUser{
+export interface IUser {
     id: string,
     email: string,
+    name: string,
 }
 
-export interface RegisterRequest{
+export interface RegisterRequest {
     email: string,
     password: string,
     confirmPassword: string

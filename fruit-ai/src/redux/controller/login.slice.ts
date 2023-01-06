@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-debugger */
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import IdentityApi from "../../api/identity.api";
-import { RootEpic } from "../../common/define-type";
-import { IUser, LoginRequest, RegisterRequest, ResponseDeparment } from "../../common/define-identity";
-import Utils from "../../common/utils";
-import { catchError, filter, switchMap,mergeMap, map } from "rxjs/operators";
-import { WritableDraft } from "immer/dist/internal";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { notification } from "antd";
-// import openNotification, { NotificationType } from "../../common/notification/Notification";
+import { WritableDraft } from "immer/dist/internal";
+import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
+import IdentityApi from "../../api/identity.api";
+import { IUser, LoginRequest, RegisterRequest, ResponseDeparment } from "../../common/define-identity";
+import { RootEpic } from "../../common/define-type";
+import Utils from "../../common/utils";
 
 type MessageLogin = {
     content: string;
@@ -24,7 +23,7 @@ interface LoginState {
     user: IUser | undefined;
     message: MessageLogin | undefined;
     messageForgot: MessageForgot | undefined;
-    departmentId : number;
+    departmentId: number;
     refresh_token: string;
     statusCode: string | undefined
 }
@@ -33,7 +32,7 @@ const initState: LoginState = {
     loading: false,
     isSuccess: true,
     user: undefined,
-    departmentId : 1,
+    departmentId: 1,
     message: undefined,
     messageForgot: undefined,
     refresh_token: "",
@@ -48,42 +47,49 @@ const loginSlice = createSlice({
             state.loading = true;
             // console.log("da chui vao",state.loading)
         },
-        loginSuccess(state, action: PayloadAction<{ user: IUser, token: string}>) {
+        loginSuccess(state, action: PayloadAction<{ user: IUser, token: string }>) {
             Utils.setLocalStorage('token', action.payload.token);
+            Utils.setLocalStorage('userId', action.payload.user.id)
+            Utils.setLocalStorage('userEmail', action.payload.user.email)
+            Utils.setLocalStorage('userName', action.payload.user.name)
+
             // state.loading = false;
             // Utils.setLocalStorage("email", action.payload.user.email);
             // Utils.setLocalStorage("id", action.payload.user.id);
             // Utils.setLocalStorage("password", action.payload.user.password);
             // Utils.setLocalStorage("refresh_token", action.payload.refresh_token)
             // Utils.setLocalStorage("email", action.payload.user.)
-            Utils.setLocalStorage("userEmail", action.payload.user.email)
             // Utils.setLocalStorage("expires", action.payload.expires_token)
             state.user = action.payload.user
             state.loading = false
             state.isSuccess = true;
+            notification.open({
+                message: 'Đăng nhập thành công',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+                style: {
+                    marginTop: 40
+                }
+            });
         },
-        loginFail(state, action: any){
+        loginFail(state, action: any) {
             console.log(action);
-            if(action.payload.response===null) notification.open({
-                    message: 'Đăng nhập không thành công',
-                    description:
-                    'Hãy kiểm tra kết nối mạng.',
-                    onClick: () => {
+            notification.open({
+                message: 'Đăng nhập không thành công',
+                description:
+                    'Hãy kiểm tra lại thông tin đăng nhập.',
+                onClick: () => {
                     console.log('Notification Clicked!');
-                    },
-                });
-                notification.open({
-                    message: 'Đăng nhập không thành công',
-                    description:
-                        action.payload.response.message,
-                    onClick: () => {
-                    console.log('Notification Clicked!');
-                    },
-                });
+                },
+                style: {
+                    marginTop: 40
+                }
+            });
             state.message = action.payload.message
         },
-        checkAbleToLogin(state,action: PayloadAction<string>){
-            state.statusCode=action.payload;
+        checkAbleToLogin(state, action: PayloadAction<string>) {
+            state.statusCode = action.payload;
         }
         ,
         getInfoUser(state, action: PayloadAction<IUser>) {
@@ -92,7 +98,7 @@ const loginSlice = createSlice({
         forgotRequest(state, action: PayloadAction<string>) {
             state.loading = true
         },
-        sendMailSuccess(state, action: PayloadAction<{message: WritableDraft<MessageLogin> | undefined}>) {
+        sendMailSuccess(state, action: PayloadAction<{ message: WritableDraft<MessageLogin> | undefined }>) {
             state.message = action.payload.message
             state.loading = false
             state.isSuccess = true;
@@ -100,10 +106,10 @@ const loginSlice = createSlice({
         setLoading(state, action: PayloadAction<boolean>) {
             state.loading = action.payload
         },
-        getDepartmentRequest(state, action : PayloadAction<string>){
+        getDepartmentRequest(state, action: PayloadAction<string>) {
             state.loading = true;
         },
-        getDepartmentSuccess(state,action : PayloadAction<ResponseDeparment>){
+        getDepartmentSuccess(state, action: PayloadAction<ResponseDeparment>) {
             state.isSuccess = true;
             state.departmentId = action.payload.departmentId;
         },
@@ -123,10 +129,10 @@ const loginSlice = createSlice({
             state.message = undefined;
             state.loading = false
         },
-        setStatusCode(state, action : PayloadAction<string>){
+        setStatusCode(state, action: PayloadAction<string>) {
             state.statusCode = action.payload;
         },
-        clearAllRequest(state){
+        clearAllRequest(state) {
             state.loading = true;
             state.statusCode = undefined;
             state.user = undefined;
@@ -134,7 +140,7 @@ const loginSlice = createSlice({
 
         registerRequest(state, action: PayloadAction<RegisterRequest>) {
             state.loading = true;
-            console.log('Da chui vao voi action: ',action);
+            console.log('Da chui vao voi action: ', action);
         },
 
         registerSuccess(state, action: PayloadAction<any>) {
@@ -143,7 +149,7 @@ const loginSlice = createSlice({
                 // description:
                 //     action.payload.response.message,
                 onClick: () => {
-                console.log('Notification Clicked!');
+                    console.log('Notification Clicked!');
                 },
             });
             // openNotification(NotificationType.Info, 'topRight', `Đăng ký tài khoản mới thành công!`, ``);
@@ -158,7 +164,7 @@ const loginSlice = createSlice({
                 description:
                     action.payload.response.message,
                 onClick: () => {
-                console.log('Notification Clicked!');
+                    console.log('Notification Clicked!');
                 },
             });
             state.loading = false
@@ -175,46 +181,51 @@ const login$: RootEpic = (action$) => action$.pipe(
             "email": re.payload.email,
             "password": re.payload.password,
             "remember": re.payload.remember,
+            "additionalProp1": {},
         };
+
         return IdentityApi.login(body).pipe(
             mergeMap((res: any) => {
-                    console.log(res);
-                    console.log(res.data.accessToken);
-                    const token = res.data.accessToken
-                    const user: IUser = {
-                        email: res.data.email,
-                        id: res.data.id,
-                    };
-                    console.log(user);
-                    return [
-                        loginSlice.actions.loginSuccess({ user, token: token }),
-                        loginSlice.actions.setLoading(false),
-                        loginSlice.actions.setStatusCode(res.statusCode)
-                    ];
+                console.log(res);
+                console.log(res.data.accessToken);
+                const token = res.data.accessToken
+                const user: IUser = {
+                    id: res.data.id,
+                    email: res.data.email,
+                    name: res.data.name,
+                };
+                console.log(user);
+                return [
+                    loginSlice.actions.loginSuccess({ user, token: token }),
+                    loginSlice.actions.setLoading(false),
+                    loginSlice.actions.setStatusCode(res.statusCode)
+                ];
             }),
-            catchError(err => [loginSlice.actions.loginFail(err)])
+            catchError(err =>
+                [loginSlice.actions.loginFail(err)]
+            )
         )
     })
 )
 
 
-const forgot$ : RootEpic = (action$) => action$.pipe(
+const forgot$: RootEpic = (action$) => action$.pipe(
     filter(forgotRequest.match),
     switchMap((re) => {
         return IdentityApi.forgotPassword(re.payload).pipe(
-            map((res:any) => {
-                return loginSlice.actions.messageForgot({Message: "success"});
-            }),catchError(err => [loginSlice.actions.messageForgot(err.response)])
+            map((res: any) => {
+                return loginSlice.actions.messageForgot({ Message: "success" });
+            }), catchError(err => [loginSlice.actions.messageForgot(err.response)])
         )
     })
 )
 
-const clearMessage$ : RootEpic = (action$) => action$.pipe(
+const clearMessage$: RootEpic = (action$) => action$.pipe(
     filter(clearMessageResquest.match),
-    map(() => {return loginSlice.actions.clearMessage()})
+    map(() => { return loginSlice.actions.clearMessage() })
 )
 
-const logOut$ : RootEpic = (action$) => action$.pipe(
+const logOut$: RootEpic = (action$) => action$.pipe(
     filter(clearAllRequest.match),
     mergeMap(() => {
         return [
@@ -235,14 +246,14 @@ const register$: RootEpic = (action$) => action$.pipe(
         };
         return IdentityApi.register(body).pipe(
             mergeMap((res: any) => {
-                    return [
-                        loginSlice.actions.setLoading(false),
-                        loginSlice.actions.setStatusCode(res.statusCode),
-                        loginSlice.actions.registerSuccess(res)
-                    ];   
+                return [
+                    loginSlice.actions.setLoading(false),
+                    loginSlice.actions.setStatusCode(res.statusCode),
+                    loginSlice.actions.registerSuccess(res)
+                ];
             }),
-            catchError(err => 
-                [   
+            catchError(err =>
+                [
                     loginSlice.actions.setStatusCode('UniqueEmail'),
                     loginSlice.actions.registerFail(err)
                 ]
@@ -251,7 +262,7 @@ const register$: RootEpic = (action$) => action$.pipe(
     })
 )
 
-const ableToLogin$ : RootEpic = (action$) => action$.pipe(
+const ableToLogin$: RootEpic = (action$) => action$.pipe(
     filter(checkAbleToLogin.match),
     mergeMap(() => {
         return [

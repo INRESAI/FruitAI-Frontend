@@ -1,13 +1,9 @@
-import { Button, Table } from 'antd'
-import React, { useState } from 'react'
+import {DeleteOutlined,EditOutlined,LoginOutlined} from '@ant-design/icons';
+import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import {
-    EditOutlined,
-    LoginOutlined,
-    DeleteOutlined
-} from '@ant-design/icons';
-import './PackStyle.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './PackStyle.css';
 
 interface DataType {
     key: React.Key;

@@ -2,18 +2,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import Icon from '@ant-design/icons'
-import { Avatar, Badge, Button, Input } from 'antd'
+import { Avatar, Badge, Button, Dropdown, Input, MenuProps } from 'antd'
 import { useEffect, useState } from 'react'
 import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
-import AddCameraActive from '../../images/video_active_icon.png'
 import IconSearch from '../../images/icon_search.png'
 import UserIcon from '../../images/user_icon.png'
+import AddCameraActive from '../../images/video_active_icon.png'
+import AddCameraModel from '../../pages/Camera/AddCameraModel'
 import LoginModal from '../../pages/Login/LoginModal'
+import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
-import AddCameraModel from '../../pages/Camera/AddCameraModel'
-import Notification from '../../pages/Notification/Notification'
+import { useSelectorRoot } from '../../redux/store'
+import Utils from '../../common/utils'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -23,12 +25,58 @@ interface MyProps {
 
 export const Header = (props: MyProps) => {
 
-    const [isLogin, setIsLogin] = useState<Boolean>(false) // Biến kiểm tra đã login hay chưa
+    const [isLogin, setIsLogin] = useState<string>('')
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
     const [isOpenAddCameraModal, setIsOpenAddCameraModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal add camera hay chưa
     const [isOpenNotification, setIsOpenNotification] = useState<boolean>(false) // Biến kiểm tra đang mở notification hay không
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
+    const [userName, setUserName] = useState<string>('')
+    const [userEmail, setUserEmail] = useState<string>('')
+
+    useEffect(() => {
+        const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
+        if (checkLogin) {
+            setIsLogin(checkLogin);
+            const usermail = localStorage.getItem('userEmail') ? localStorage.getItem('userEmail') : '';
+            const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+            setUserEmail(usermail ? usermail : '');
+            setUserName(username ? username : '');
+        }
+    });
+    const onClickLogout = () => {
+        Utils.removeItemLocalStorage('token');
+        Utils.removeItemLocalStorage('userEmail');
+        Utils.removeItemLocalStorage('userName');
+        Utils.removeItemLocalStorage('userId');
+        setIsLogin('')
+    }
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <div >
+                    Tên: {userName}
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <div >
+                    Email: {userEmail}
+                </div>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <div onClick={onClickLogout}>
+                    Đăng xuất
+                </div>
+            ),
+        },
+    ];
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
@@ -51,10 +99,7 @@ export const Header = (props: MyProps) => {
     const toggleNotification = () => {
         setIsOpenNotification(false);
     };
-    // Hàm đổi trạng thái đã login
-    const toggleIsLogin = () => {
-        setIsLogin(true)
-    }
+
     return (
         <div className='k-main-header'>
             <div className='k-header-content'>
@@ -84,7 +129,7 @@ export const Header = (props: MyProps) => {
                             />
                             <div className='header-notification' onClick={() => setIsOpenNotification(!isOpenNotification)}>
                                 {/* <div className='header-number-notification'> */}
-                                    {/* <span className='number-noti'>4</span> */}
+                                {/* <span className='number-noti'>4</span> */}
                                 {/* </div> */}
                                 <Badge count={4}>
                                     <img src={NotificationIcon} />
@@ -94,7 +139,11 @@ export const Header = (props: MyProps) => {
                                 isOpenModal={isOpenNotification}
                                 toggleNotification={toggleNotification}
                             />
-                            <Avatar className='header-avatar' src={UserIcon} /></>
+                            <Dropdown menu={{ items }} placement="bottomLeft" arrow>
+                                <Avatar className='header-avatar' src={UserIcon} />
+                            </Dropdown>
+
+                        </>
                         :
                         <>
                             <Button className='header-button' style={{ marginRight: 15 }} onClick={() => setIsOpenLoginModal(true)}>
@@ -107,7 +156,6 @@ export const Header = (props: MyProps) => {
                                 isOpenModal={isOpenLoginModal}
                                 toggleLoginModal={toggleLoginModal}
                                 toggleRegisterModal={toggleRegisterModal}
-                                toggleIsLogin={toggleIsLogin}
                             />
                             <RegisterModal
                                 isOpenModal={isOpenRegisterModal}

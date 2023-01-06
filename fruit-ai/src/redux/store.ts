@@ -3,9 +3,9 @@ import { AnyAction, configureStore, getDefaultMiddleware } from '@reduxjs/toolki
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createEpicMiddleware } from 'redux-observable';
-import rootReducer, { rootEpic, RootState } from './root.reducer';
-import { persistStore,persistReducer } from 'redux-persist'
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import rootReducer, { RootState, rootEpic } from './root.reducer';
 
 const epicMiddleware = createEpicMiddleware<AnyAction, AnyAction, RootState>();
 
