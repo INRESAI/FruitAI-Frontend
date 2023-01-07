@@ -19,6 +19,7 @@ import CameraImg7 from '../../images/camera_img_7.png';
 import CameraImg8 from '../../images/camera_img_8.png';
 import CameraImg9 from '../../images/camera_img_9.png';
 import "./style/cameraManager.css";
+import Video from "../../components/video/video";
 
 const data = [
     {
@@ -107,7 +108,10 @@ const CameraManager = () => {
     return (
         <div className="camera-manager-main">
             <Title className="camera-manager-title" level={3}>Danh sách camera</Title>
-            <List
+
+            <Video/>
+            
+            {/* <List
                 className="camera-manager-list"
                 grid={{ gutter: 16, column: 4 }}
                 dataSource={data}
@@ -127,7 +131,7 @@ const CameraManager = () => {
                         </Link>
                     </List.Item>
                 )}
-            />
+            /> */}
 
         </div>
     )

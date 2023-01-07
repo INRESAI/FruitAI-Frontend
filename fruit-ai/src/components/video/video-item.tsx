@@ -1,20 +1,19 @@
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ScaleLoader from "react-spinners/ScaleLoader";
 
-import { apiStreamingVideo } from '../../api/streaming-video';
-import { IPenData } from '../../types/pen';
+import { apiStreamingVideo } from '../../api/streaming-video'
+// import { IPenData } from '@type/pen';
 
 type VideoItemProps = {
     uuId: string;
-    pen: IPenData;
+    camId: string;
+    width: string;
+    height: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-            border: '2px solid black'
-        },
         video: {
             width: '100%'
         },
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const VideoItem: FC<VideoItemProps> = ({ uuId, pen }: VideoItemProps) => {
+const VideoItem: FC<VideoItemProps> = ({ uuId, camId, width, height }: VideoItemProps) => {
     const classes = useStyles();
     const [streamingVideoURL, setStreamingVideoURL] = useState<string>("");
     const [loadingVideo, setLoadingVideo] = useState(true);
@@ -36,21 +35,34 @@ const VideoItem: FC<VideoItemProps> = ({ uuId, pen }: VideoItemProps) => {
     useEffect(() => {
         //componentDidMount
         getURLStreaming();
+
         //componentWillUnmount
-        //return () => {
-        //};
+        return () => {
+            terminateStreamingVideoByUuId();
+        };
     }, []);
 
+    const terminateStreamingVideoByUuId = () => {
+        const payload = [uuId]
+
+        // apiStreamingVideo.terminateByUuId(payload)
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
+        apiStreamingVideo.terminateRTCStreaming(camId, payload)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const getURLStreaming = () => {
-        if (pen.name == "C100.1") {
-            setStreamingVideoURL(apiStreamingVideo.getStreamingVideoURL("3", uuId));
-        } else if (pen.name == "C100.2") {
-            setStreamingVideoURL(apiStreamingVideo.getStreamingVideoURL("1", uuId));
-        } else if (pen.name == "C100.3") {
-            setStreamingVideoURL(apiStreamingVideo.getStreamingVideoURL("2", uuId));
-        } else {
-            setStreamingVideoURL(apiStreamingVideo.getStreamingVideoURL("3", uuId));
-        }
+        setStreamingVideoURL(apiStreamingVideo.getStreamingVideoURL(camId, uuId));
     };
 
     const videoStreamingLoaded = () => {
@@ -58,7 +70,7 @@ const VideoItem: FC<VideoItemProps> = ({ uuId, pen }: VideoItemProps) => {
     }
 
     return (
-        <div className={`${classes.root}`}>
+        <div>
             {
                 loadingVideo && (
                     <div className={classes.spinnerLoadingVideo}>
@@ -68,7 +80,7 @@ const VideoItem: FC<VideoItemProps> = ({ uuId, pen }: VideoItemProps) => {
             }
             {
                 streamingVideoURL.length > 0 && (
-                    <img src={streamingVideoURL} className={classes.video} onLoad={videoStreamingLoaded} />
+                    <img src={streamingVideoURL} className={classes.video} onLoad={videoStreamingLoaded} width={width} height={loadingVideo ? "5" : height} />
                 )
             }
         </div>

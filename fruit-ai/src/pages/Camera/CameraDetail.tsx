@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { CopyOutlined, DownOutlined } from '@ant-design/icons'
 import { Button, Card, Image, List } from 'antd'
-import Meta from 'antd/es/card/Meta'
+// import Meta from 'antd/es/card/Meta'
 import Title from 'antd/es/typography/Title'
 import { useEffect, useState } from 'react'
 import CameraDetailImage from '../../images/camera_detail_img.png'
@@ -24,6 +24,12 @@ import CameraImg9 from '../../images/camera_img_9.png'
 import DeleteIcon from '../../images/delete_icon.png'
 import EditIcon from '../../images/edit_icon.png'
 import './style/cameraDetail.css'
+import Meta from 'antd/es/card/Meta'
+import { useParams } from 'react-router'
+import CImageLoading from '../../components/video/CImageLoading'
+import StreamAPI from '../../api/camera/streaming.api'
+import { v4 as uuidv4 } from 'uuid';
+
 interface DataType {
     title?: string;
     img?: string;
@@ -129,7 +135,7 @@ const DataCameraList = [
         loading: false
     },
 ];
-const CameraDetail = () => {
+const CameraDetail = (props: any) => {
     const [cameraDetailImage, setCameraDetailImage] = useState<string>(CameraDetailImage)
     const [cameraDetailName, setCameraDetailName] = useState<string>('Camera 1')
     const [cameraDetailCreateDate, setCameraDetailCreateDate] = useState<Date>(new Date())
@@ -138,6 +144,12 @@ const CameraDetail = () => {
     const [data, setData] = useState<DataType[]>([]);
     const [count, setCount] = useState<number>(5)
     const [step, setStep] = useState<number>(5)
+    const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+
+    let { cameraId } = useParams(); // Lay id truyen qua param react router dom
+
+    console.log(cameraId)
 
     useEffect(() => {
         if (count <= DataCameraList.length) {
@@ -187,7 +199,27 @@ const CameraDetail = () => {
     return (
         <div className='camera-detail-main'>
             <div className='camera-detail-left'>
-                <Image className='camera-detail-image' preview={false} alt="example" src={cameraDetailImage} />
+                {/* <Image className='camera-detail-image' preview={false} alt="example" src={cameraDetailImage} /> */}
+                {
+                    cameraId ? 
+                    <CImageLoading
+                        className='camera-detail-image h-56'
+                        src={StreamAPI.getStream(cameraId)}
+                        // className="h-56"
+                        uuid={uuidv4()}
+                        isFullScreen={isFullScreen}
+                        setIsFullScreen={setIsFullScreen}
+                        // pen={pen}
+                        // updateSelectedPen={updateSelectedPen}
+                        // onClick={() =>
+                        //     handleShowExpandMenu(true, item)
+                        // }
+                        // isHiddenCamera={pen?.cameras[0]?.isHiddenCamera ? true : false}
+                        idCamera={cameraId} // Hien ra danh sach cac chuong, va chi hien thi 1 camera cua 1 chuong
+                        
+                    /> :
+                    <div>Loading....</div>
+                }
                 <Title className="camera-detail-title" level={3}>
                     <div className='title-name'>{cameraDetailName}</div>
                     <div className='title-icon'>

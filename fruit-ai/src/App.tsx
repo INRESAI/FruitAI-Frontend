@@ -37,7 +37,7 @@ const App = () => {
                         <Route path='/pack_manager' element={<PackManager />} />
                         <Route path='/camera_manager' element={<CameraManager />} />
                         <Route path='/assist' element={<Assist />} />
-                        <Route path='/camera_detail' element={<CameraDetail />} />
+                        <Route path='/camera_detail/:cameraId' element={<CameraDetail />} />
                         <Route path='/statistic' element={<StatisticTypeOfFruitByDate />} />
                     </Routes>
                 </Content>
