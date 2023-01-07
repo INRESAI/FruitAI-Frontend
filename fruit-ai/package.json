@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.8.0",
     "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -20,6 +21,7 @@
     "http-client": "^4.3.1",
     "jsencrypt": "^3.3.1",
     "material-ui": "^0.20.2",
+    "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.29.4",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
@@ -35,6 +37,7 @@
     "redux-observable": "^1.2.0",
     "redux-persist": "^6.0.0",
     "rxjs": "^6.6.6",
+    "styled-components": "^5.3.6",
     "typescript": "^4.9.4",
     "universal-cookie": "^4.0.4",
     "uuid": "^9.0.0",
@@ -66,6 +69,7 @@
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.25",
+    "@types/styled-components": "^5.1.26",
     "@types/uuid": "^9.0.0"
   }
 }

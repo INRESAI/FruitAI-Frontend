@@ -8,12 +8,12 @@ import { IDataResponse } from '../common/define-meetings';
 import HttpClient from "./http-client";
 export default class IdentityApi {
     static host = 'http://178.128.19.31:3003';
-    static encryptData(text: string, key: string) {
-        const jsEncrypt = new JSEncrypt();
-        jsEncrypt.setPublicKey(key)
-        const encypt = jsEncrypt.encrypt(text);
-        return encypt || '';
-    }
+    // static encryptData(text: string, key: string) {
+    //     const jsEncrypt = new JSEncrypt();
+    //     jsEncrypt.setPublicKey(key)
+    //     const encypt = jsEncrypt.encrypt(text);
+    //     return encypt || '';
+    // }
     static getToken(): Observable<string | null> {
         return HttpClient.get(`${IdentityApi.host}/${SYSTEM_CONSTANTS.API.IDENTITY.CONNECT_TOKEN}`).pipe(
             map((res) => res as string || null)
