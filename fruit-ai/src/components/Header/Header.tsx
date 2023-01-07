@@ -14,8 +14,10 @@ import LoginModal from '../../pages/Login/LoginModal'
 import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
 import './header.css'
-import { useSelectorRoot } from '../../redux/store'
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import Utils from '../../common/utils'
+import { WarehouseRequest } from '../../common/define-fruit'
+import { getAllWarehouseByUserIdRequest } from '../../redux/controller/fruit.slice'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -33,6 +35,7 @@ export const Header = (props: MyProps) => {
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
     const [userName, setUserName] = useState<string>('')
     const [userEmail, setUserEmail] = useState<string>('')
+    const dispatch = useDispatchRoot();
 
     useEffect(() => {
         const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
@@ -40,16 +43,35 @@ export const Header = (props: MyProps) => {
             setIsLogin(checkLogin);
             const usermail = localStorage.getItem('userEmail') ? localStorage.getItem('userEmail') : '';
             const username = localStorage.getItem('userName') ? localStorage.getItem('userName') : '';
+            const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : '';
             setUserEmail(usermail ? usermail : '');
             setUserName(username ? username : '');
         }
     });
+
+    useEffect(() => {
+        if (isLogin) {
+            let userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : "";
+            console.log(userId ? userId : '');
+            if (userId) {
+                userId = userId.slice(1);
+                userId = userId.slice(0, userId.length - 1);
+                const req: WarehouseRequest = {
+                    "userId": userId,
+                    "additionalProp1": {},
+                };
+                dispatch(getAllWarehouseByUserIdRequest(req))
+            }
+        }
+    }, [isLogin])
     const onClickLogout = () => {
         Utils.removeItemLocalStorage('token');
         Utils.removeItemLocalStorage('userEmail');
         Utils.removeItemLocalStorage('userName');
         Utils.removeItemLocalStorage('userId');
+        Utils.removeItemLocalStorage('warehouseId');
         setIsLogin('')
+        window.location.reload();
     }
     const items: MenuProps['items'] = [
         {

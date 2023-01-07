@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 const { Content } = Layout;
 const App = () => {
     const [isLogin, setIsLogin] = useState<string>('')
+    const [clickedWareHouseId, setClickedWareHouseId] = useState<string>('')
 
     useEffect(() => {
         const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
@@ -24,14 +25,21 @@ const App = () => {
             setIsLogin(checkLogin);
         }
     }, []);
+
+    useEffect(() => {
+        const warehouseId = localStorage.getItem('warehouseId') ? localStorage.getItem('warehouseId') : '';
+        if (warehouseId) {
+            setClickedWareHouseId(warehouseId);
+        }
+    })
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            {/* {sliceIsLogin ? <SideBar /> : <></>} */}
-            <SideBar />
+            {clickedWareHouseId ? <SideBar /> : <></>}
+            {/* <SideBar /> */}
             <Layout className="site-layout">
                 <Header />
                 <Content style={{ margin: '0 16px' }}>
-                    {/* {isLogin ?  <Warehouse/> : <></>} */}
+                    {isLogin && !clickedWareHouseId ?  <Warehouse/> : <></>}
                     <Routes>
                         <Route path='/' element={<OverView />} />
                         <Route path='/pack_manager' element={<PackManager />} />

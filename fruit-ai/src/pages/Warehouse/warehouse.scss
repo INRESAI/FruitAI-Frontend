@@ -26,9 +26,56 @@
             text-align: center;
             color: #FFFFFF;
         }
-        .title-button:hover{
+
+        .title-button:hover {
             border-color: #3AED1D;
             background-color: #3AED1D;
+        }
+    }
+
+    .warehouse-table {
+        .default-button {
+            height: 32px;
+            border-radius: 10px;
+            border: 1.5px solid #1dce00;
+
+            .default-button-icon {
+                width: 20px;
+                height: 20px;
+                align-self: center;
+
+                .icon-default{
+                    margin-bottom: 10px;
+                }
+            }
+
+            .default-button-text {
+                font-family: 'Lexend Deca';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px;
+                text-align: center;
+                color: #1dce00;
+            }
+
+        }
+
+        .ant-table-cell {
+            font-family: 'Lexend Deca';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            color: #1E1E1E;
+
+        }
+
+        .ant-table-thead {
+            .ant-table-cell {
+                background: #CCFFC1;
+            }
         }
     }
 }

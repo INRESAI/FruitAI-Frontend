@@ -3,8 +3,10 @@ import { catchError, filter, mergeMap, switchMap } from "rxjs/operators";
 import { IWareHouse, WarehouseRequest } from "../../common/define-fruit";
 import { RootEpic } from "../../common/define-type";
 import FruitAPI from "../../api/fruit.api";
+import Utils from "../../common/utils";
 interface FruitState {
     sliceLstWarehouses: IWareHouse[],
+    sliceWarehouses: IWareHouse | null,
     message: string,
     loading: boolean,
     successRes: any,
@@ -12,6 +14,7 @@ interface FruitState {
 }
 const initialStateBootstrap: FruitState = {
     sliceLstWarehouses: [],
+    sliceWarehouses: null,
     message: '',
     loading: false,
     successRes: null,
@@ -22,11 +25,12 @@ const fruitSlice = createSlice({
     name: 'fruit',
     initialState: initialStateBootstrap,
     reducers: {
-        // setIsLogin: (state, action: PayloadAction<boolean>) => {
-        //     state.sliceIsLogin = action.payload
-        //     console.log('----check login state----');
-        //     console.log(action.payload);
-
+        setWareHouse: (state, action: PayloadAction<IWareHouse>) => {
+            Utils.setLocalStorage('warehouseId', action.payload.id);
+            state.sliceWarehouses = action.payload
+            console.log('----setWareHouse state----');
+            console.log(action.payload);
+        },
         // },
         // Get task Request
         getAllWarehouseByUserIdRequest: (state, action: PayloadAction<WarehouseRequest>) => {
@@ -98,6 +102,7 @@ export const FruitEpics = [
 ];
 
 export const {
-    getAllWarehouseByUserIdRequest
+    getAllWarehouseByUserIdRequest,
+    setWareHouse
 } = fruitSlice.actions;
 export const fruitReducer = fruitSlice.reducer;

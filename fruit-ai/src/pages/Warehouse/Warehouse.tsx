@@ -1,15 +1,30 @@
-import { DeleteOutlined, EditOutlined, LoginOutlined } from '@ant-design/icons';
+import Icon, { DeleteOutlined, EditOutlined, LoginOutlined } from '@ant-design/icons';
 import { Button, Table } from "antd";
 import type { ColumnsType } from 'antd/es/table';
 import Title from "antd/es/typography/Title";
 import { useEffect, useState } from "react";
 import './warehouse.scss';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
-import { getAllWarehouseByUserIdRequest } from '../../redux/controller';
-import { WarehouseRequest } from '../../common/define-fruit';
+import { getAllWarehouseByUserIdRequest, setWareHouse } from '../../redux/controller';
+import { IWareHouse, WarehouseRequest } from '../../common/define-fruit';
 import Column from 'antd/es/table/Column';
+import DetailsIcon from '../../images/default_icon.png'
 
+// interface MyProps{
+//     lstWarehouse: IWareHouse[]
+// }
+interface DataType {
+    id: string;
+    key: React.Key;
+    orderByNumber: number;
+    name: string;
+    address: string;
+}
 const columns = [
+    {
+        title: 'STT',
+        dataIndex: 'orderByNumber',
+    },
     {
         title: 'Tên kho',
         dataIndex: 'name',
@@ -17,6 +32,18 @@ const columns = [
     {
         title: 'Địa chỉ',
         dataIndex: 'address',
+    },
+    {
+        title: "Mặc định",
+        key: "default",
+        render: () => (
+            <div>
+                <Button className='default-button'>
+                    <Icon className='default-button-icon' component={() => (<img className='icon-default' src={DetailsIcon} />)} />
+                    <span className='default-button-text'>Đặt làm mặt định</span>
+                </Button>
+            </div>
+        )
     },
     {
         title: "Thao tác",
@@ -32,41 +59,40 @@ const columns = [
 ];
 
 const Warehouse = () => {
+    const [lstWareHouse, setLstWareHouse] = useState<DataType[]>([])
+    const { sliceLstWarehouses } = useSelectorRoot(item => item.fruit);
     const dispatch = useDispatchRoot();
 
-    const { sliceLstWarehouses } = useSelectorRoot(item => item.fruit);
-
 
     useEffect(() => {
-        let userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : "";
-        console.log(userId ? userId : '');
-        if (userId) {
-            userId = userId.slice(1);
-            userId = userId.slice(0, userId.length - 1);
-            const req: WarehouseRequest = {
-                "userId": userId,
-                "additionalProp1": {},
-            };
-            dispatch(getAllWarehouseByUserIdRequest(req))
+        const warehouses = []
+        for (let i = 0; i < sliceLstWarehouses.length; i++) {
+            warehouses.push({
+                id: sliceLstWarehouses[i].id,
+                key: i,
+                orderByNumber: i + 1,
+                name: sliceLstWarehouses[i].name,
+                address: sliceLstWarehouses[i].address,
+            });
         }
-    }, [])
-
-    useEffect(() => {
-        console.log(sliceLstWarehouses);
+        setLstWareHouse(warehouses);
     }, [sliceLstWarehouses])
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-
+    // rowSelection object indicates the need for row selection
     const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
+        onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+            const warehouseSelect: IWareHouse = {
+                id: selectedRows[0].id,
+                name: selectedRows[0].name,
+                address: selectedRows[0].address,
+            }
+            dispatch(setWareHouse(warehouseSelect))
+            console.log('selectedRows: ', warehouseSelect);
+            window.location.reload();
+        },
     };
     return (
+        
         <div className="warehouse-main">
             <div className="warehouse-title">
                 <Title className="title-text" level={3}>Vui lòng chọn kho đặt làm mặc định!</Title>
@@ -76,8 +102,7 @@ const Warehouse = () => {
                 <Table
                     rowSelection={rowSelection}
                     columns={columns}
-                    dataSource={sliceLstWarehouses} >
-
+                    dataSource={lstWareHouse} >
                 </Table>
             </div>
         </div>

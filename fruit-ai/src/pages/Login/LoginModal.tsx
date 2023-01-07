@@ -21,6 +21,7 @@ const LoginModal = (props: MyProps) => {
         console.log(isSuccess)
         if (isSuccess === "OK" && userToken !== null && userToken !== undefined) {
             props.toggleLoginModal();
+            window.location.reload();
         }
     }, [isSuccess])
     const onFinish = async (account: LoginRequest): Promise<any> => {
