@@ -9,6 +9,7 @@ import { getAllWarehouseByUserIdRequest, setWareHouse } from '../../redux/contro
 import { IWareHouse, WarehouseRequest } from '../../common/define-fruit';
 import Column from 'antd/es/table/Column';
 import DetailsIcon from '../../images/default_icon.png'
+import AddWarehouseModel from './AddWarehouseModel';
 
 // interface MyProps{
 //     lstWarehouse: IWareHouse[]
@@ -60,6 +61,7 @@ const columns = [
 
 const Warehouse = () => {
     const [lstWareHouse, setLstWareHouse] = useState<DataType[]>([])
+    const [isOpenModal,setIsOpenModal] = useState<boolean>(false);
     const { sliceLstWarehouses } = useSelectorRoot(item => item.fruit);
     const dispatch = useDispatchRoot();
 
@@ -91,12 +93,25 @@ const Warehouse = () => {
             window.location.reload();
         },
     };
+
+    const toggleAddWarehouseModal = () => {
+        setIsOpenModal(!isOpenModal);
+    }
     return (
         
         <div className="warehouse-main">
+            <AddWarehouseModel
+                isOpenModal={isOpenModal}
+                toggleAddWarehouseModal={toggleAddWarehouseModal}
+            />
             <div className="warehouse-title">
                 <Title className="title-text" level={3}>Vui lòng chọn kho đặt làm mặc định!</Title>
-                <Button className="title-button">Tạo kho mới</Button>
+                <Button 
+                    className="title-button"
+                    onClick={() => setIsOpenModal(true)}
+                >
+                    Tạo kho mới
+                </Button>
             </div>
             <div className="warehouse-table">
                 <Table

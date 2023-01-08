@@ -1,0 +1,80 @@
+.body{
+    font-family: 'Lexend Deca';
+    font-style: normal;
+}
+.add-camera-modal .ant-modal-content {
+    padding: 0;
+}
+
+.add-camera-modal .ant-modal-header {
+    padding: 16px 32px;
+    background: #1DCE00;
+}
+
+.add-camera-modal .ant-modal-title {
+    text-align: left;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+.add-camera-modal .ant-modal-close {
+    display: block;
+    color: white;
+}
+
+.add-camera-modal .ant-modal-close:hover {
+    color: white;
+}
+
+.add-camera-modal .ant-modal-close-x {
+    font-size: 20px;
+}
+
+.add-camera-modal .ant-modal-body {
+    padding: 24px;
+}
+
+.add-camera-modal .ant-modal-footer {
+    text-align: center;
+    padding-bottom: 32px;
+    margin-top: -10px;
+}
+
+.add-camera-modal .ant-btn.ant-btn-default {
+    height: 32px;
+    padding: 4.5px 19px;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 10px;
+    border: 1.5px solid #1dce00;
+    color: #1DCE00;
+}
+
+.add-camera-modal .btn-cancel {
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #1DCE00;
+}
+
+.add-camera-modal .btn-submit {
+    background-color: #1DCE00;
+    font-family: 'Lexend Deca';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.add-camera-modal .btn-submit:hover {
+    background-color: #1DCE00;
+}
