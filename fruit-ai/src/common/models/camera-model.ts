@@ -24,4 +24,16 @@ export interface Camera{
     note: string,
     warehouseId: string,
     id: string
-  }
+}
+
+export interface AddNewCameraRequest{
+    name: string,
+    link: string,
+    note: string,
+    warehouseId: string,
+}
+
+export interface AddNewCameraResponse{
+    data: string,
+    statusCode: string
+}

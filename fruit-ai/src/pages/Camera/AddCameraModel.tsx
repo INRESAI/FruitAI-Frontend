@@ -1,10 +1,39 @@
+import {useState} from 'react'
 import { Button, Form, Input, Modal } from 'antd';
 import '../Camera/style/addcameramodal.css';
+import { useDispatchRoot } from '../../redux/store';
+import { addCameraRequest } from '../../redux/controller';
+import { AddNewCameraRequest } from '../../common/models/camera-model';
 interface MyProps {
     isOpenModal: boolean;
     toggleAddCameraModal: () => void;
 }
 const AddCameraModel = (props: MyProps) => {
+
+    const [cameraName,setCameraName] = useState('');
+    const [cameraLink, setCameraLink] = useState('');
+    const [cameraNote,setCameraNote] = useState('');
+
+    const dispatch = useDispatchRoot()
+
+    const CreateNewCamera = () => {
+        let warehouseId = localStorage.getItem('warehouseId')?.toString()
+        if(warehouseId){
+            warehouseId = warehouseId.slice(1);
+            warehouseId = warehouseId.slice(0, warehouseId.length - 1);
+            const param : AddNewCameraRequest = {
+                name: cameraName,
+                link: cameraLink,
+                note: cameraNote,
+                warehouseId: warehouseId ? warehouseId : '',
+            }
+
+            console.log(param);
+            dispatch(addCameraRequest(param))
+            props.toggleAddCameraModal()
+        }
+    }
+
     return (
         <Modal
             className='add-camera-modal'
@@ -16,7 +45,7 @@ const AddCameraModel = (props: MyProps) => {
                 <Button className='btn-cancel' key="back" onClick={props.toggleAddCameraModal}>
                     Hủy bỏ
                 </Button>,
-                <Button className='btn-submit' key="submit" type="primary" onClick={props.toggleAddCameraModal}>
+                <Button className='btn-submit' key="submit" type="primary" onClick={()=>CreateNewCamera()}>
                     Tạo mới
                 </Button>,
             ]}
@@ -32,7 +61,7 @@ const AddCameraModel = (props: MyProps) => {
                         name="name"
                         rules={[{ required: true, message: 'Vui lòng nhập tên camera' }]}
                     >
-                        <Input className='form-input' placeholder="Nhập tên camera" />
+                        <Input onChange={(e)=>{setCameraName(e.target.value)}} className='form-input' placeholder="Nhập tên camera" />
                     </Form.Item>
                 </div>
                 <div>
@@ -41,7 +70,7 @@ const AddCameraModel = (props: MyProps) => {
                         name="link"
                         rules={[{ required: true, message: 'Vui lòng nhập link camera' }]}
                     >
-                        <Input className='form-input' placeholder="Nhập link camera" />
+                        <Input onChange={(e)=>{setCameraLink(e.target.value)}} className='form-input' placeholder="Nhập link camera" />
                     </Form.Item>
                 </div>
                 <div>
@@ -49,7 +78,7 @@ const AddCameraModel = (props: MyProps) => {
                     <Form.Item
                         name="note"
                     >
-                        <Input className='form-input' placeholder="Nhập ghi chú" />
+                        <Input onChange={(e)=>{setCameraNote(e.target.value)}} className='form-input' placeholder="Nhập ghi chú" />
                     </Form.Item>
                 </div>
             </Form>
