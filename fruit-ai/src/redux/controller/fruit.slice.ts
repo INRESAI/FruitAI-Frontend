@@ -95,7 +95,7 @@ const addWarehouseByUserId$: RootEpic = action$ =>
                 }),
                 catchError(err => {
                     console.log(err)
-                    return [fruitSlice.actions.getAllWarehouseByUserIdFailed(false)]
+                    return [fruitSlice.actions.addWarehouseByUserIdFail()]
                 }),
             );
         }),

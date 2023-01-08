@@ -28,6 +28,7 @@ const AddWarehouseModel = (props: MyProps) => {
 
             console.log(param);
             dispatch(addWarehouseByUserIdRequest(param))
+            props.toggleAddWarehouseModal()
         }
     }   
 
