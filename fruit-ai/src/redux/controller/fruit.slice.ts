@@ -4,6 +4,9 @@ import { IWareHouse, WarehouseRequest } from "../../common/define-fruit";
 import { RootEpic } from "../../common/define-type";
 import FruitAPI from "../../api/fruit.api";
 import Utils from "../../common/utils";
+import WarehouseAPI from "../../api/warehouse.api";
+import { AddWarehouseRequest } from "../../common/define-warehouse";
+import { satisfies } from "semver";
 interface FruitState {
     sliceLstWarehouses: IWareHouse[],
     sliceWarehouses: IWareHouse | null,
@@ -49,6 +52,15 @@ const fruitSlice = createSlice({
             console.log('----------failed get all Warehouse By User Id----------')
 
         },
+        addWarehouseByUserIdRequest(state,action: PayloadAction<AddWarehouseRequest>){
+            state.loading = true
+        },
+        addWarehouseByUserIdSuccess(state){
+            state.loading = false;
+        },
+        addWarehouseByUserIdFail(state){
+            state.loading = false
+        }
     }
 })
 const getAllWarehouseByUserId$: RootEpic = action$ =>
@@ -57,6 +69,29 @@ const getAllWarehouseByUserId$: RootEpic = action$ =>
             return FruitAPI.getWarehousesByUserId(re.payload).pipe(
                 mergeMap((res: any) => {
                     return [fruitSlice.actions.getAllWarehouseByUserIdSuccess(res.data.items)];
+                }),
+                catchError(err => {
+                    console.log(err)
+                    return [fruitSlice.actions.getAllWarehouseByUserIdFailed(false)]
+                }),
+            );
+        }),
+    );
+
+const addWarehouseByUserId$: RootEpic = action$ =>
+    action$.pipe(filter(addWarehouseByUserIdRequest.match),
+        switchMap((re) => {
+            return WarehouseAPI.addWarehouseByIdUser(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        fruitSlice.actions.addWarehouseByUserIdSuccess(),
+                        fruitSlice.actions.getAllWarehouseByUserIdRequest(
+                            {
+                                userId: re.payload.userId,
+                                additionalProp1: {}
+                            }    
+                        )
+                    ];
                 }),
                 catchError(err => {
                     console.log(err)
@@ -99,10 +134,12 @@ const getAllWarehouseByUserId$: RootEpic = action$ =>
 
 export const FruitEpics = [
     getAllWarehouseByUserId$,
+    addWarehouseByUserId$
 ];
 
 export const {
     getAllWarehouseByUserIdRequest,
-    setWareHouse
+    setWareHouse,
+    addWarehouseByUserIdRequest
 } = fruitSlice.actions;
 export const fruitReducer = fruitSlice.reducer;

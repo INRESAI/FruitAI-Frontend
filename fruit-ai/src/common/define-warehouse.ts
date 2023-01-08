@@ -3,3 +3,9 @@ export interface Warehouse{
     address: string,
     id: string
 }
+
+export interface AddWarehouseRequest{
+    name: string,
+    address: string,
+    userId: string,
+}

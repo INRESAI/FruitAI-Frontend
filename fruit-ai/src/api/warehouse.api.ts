@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Warehouse } from '../common/define-warehouse';
+import { AddWarehouseRequest, Warehouse } from '../common/define-warehouse';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from "rxjs/operators";
 import { CFG_BASE_URL } from '../constants/config';
@@ -14,6 +14,12 @@ export default class WarehouseAPI {
 
     static getListWarehouseByIdUser(userId: string): Observable<Warehouse[] | []> {
         return HttpClient.get(`${WarehouseAPI.host}/warehouses/${userId}`).pipe(
+            map((res) => res as Warehouse[] || [])
+        );
+    }
+
+    static addWarehouseByIdUser(param: AddWarehouseRequest): Observable<Warehouse[]| []>{
+        return HttpClient.post(`${WarehouseAPI.host}/warehouses`, param).pipe(
             map((res) => res as Warehouse[] || [])
         );
     }
