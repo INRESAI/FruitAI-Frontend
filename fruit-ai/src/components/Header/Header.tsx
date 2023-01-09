@@ -64,6 +64,10 @@ export const Header = (props: MyProps) => {
             }
         }
     }, [isLogin])
+    const onClickChooseWareHouse = () => {
+        Utils.removeItemLocalStorage('warehouseId');
+        window.location.reload();
+    }
     const onClickLogout = () => {
         Utils.removeItemLocalStorage('token');
         Utils.removeItemLocalStorage('userEmail');
@@ -92,6 +96,14 @@ export const Header = (props: MyProps) => {
         },
         {
             key: '3',
+            label: (
+                <div onClick={onClickChooseWareHouse}>
+                    Chọn kho
+                </div>
+            ),
+        },
+        {
+            key: '4',
             label: (
                 <div onClick={onClickLogout}>
                     Đăng xuất

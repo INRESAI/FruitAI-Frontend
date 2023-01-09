@@ -47,6 +47,7 @@ const App = () => {
                         <Route path='/assist' element={<Assist />} />
                         <Route path='/camera_detail/:cameraId' element={<CameraDetail />} />
                         <Route path='/statistic' element={<StatisticTypeOfFruitByDate />} />
+                        <Route path='/warehouse' element={<Warehouse />} />
                     </Routes>
                 </Content>
             </Layout>
