@@ -8,6 +8,7 @@ import ExportIcon from '../../images/icon_export.png';
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
 import { useSelectorRoot } from '../../redux/store';
+import { Link } from 'react-router-dom';
 
 interface MyProps {
     isOpenModal: boolean;
@@ -60,7 +61,7 @@ const fakeDataUrl =
 const ContainerHeight = 400;
 const Notification = (props: MyProps) => {
 
-    const { lstNotification, lstSeenNotification, lstUnSeenNotification} = useSelectorRoot((state) => state.notification);
+    const { lstNotification, lstSeenNotification, lstUnSeenNotification } = useSelectorRoot((state) => state.notification);
 
     const [itemOnClick, setItemOnClick] = useState<number>(1);
     const [data, setData] = useState<any[]>(lstSeenNotification);
@@ -76,7 +77,7 @@ const Notification = (props: MyProps) => {
 
     useEffect(() => {
         console.log(itemOnClick);
-        
+
     })
 
     // useEffect(() => {
@@ -84,9 +85,9 @@ const Notification = (props: MyProps) => {
     // }, []);
 
     const changeNotificationStatus = (key: string) => {
-        if(key==="1"){
+        if (key === "1") {
             setData(lstSeenNotification)
-        }else{
+        } else {
             setData(lstUnSeenNotification)
         }
     }
@@ -132,24 +133,26 @@ const Notification = (props: MyProps) => {
                                 height={ContainerHeight}
                                 itemHeight={47}
                                 itemKey="email"
-                                // onScroll={onScroll}
+                            // onScroll={onScroll}
                             >
                                 {(item: any) => (
-                                    <List.Item key={item.email}>
-                                        <List.Item.Meta
-                                            avatar={
-                                                <Badge>
-                                                    {/* <Avatar src={item.picture.large} /> */}
-                                                    <WarningFilled style={{color: '#0083FC'}} />
-                                                </Badge>}
-                                            title={<div>{item.title}</div>}
-                                            description={<div>
-                                                <div className='notification-des'>{item.content}</div>
-                                                <div className='notification-time'>{'dfafdadsa'}</div>
-                                            </div>}
-                                        />
-                                        <img src={UnreadIcon} />
-                                    </List.Item>
+                                    <Link to={{pathname: `/camera_detail/${item.camera.id}`}} onClick={props.toggleNotification}>
+                                        <List.Item key={item.email}>
+                                            <List.Item.Meta
+                                                avatar={
+                                                    <Badge>
+                                                        {/* <Avatar src={item.picture.large} /> */}
+                                                        <WarningFilled style={{ color: '#0083FC' }} />
+                                                    </Badge>}
+                                                title={<div>{item.title}</div>}
+                                                description={<div>
+                                                    <div className='notification-des'>{item.content}</div>
+                                                    <div className='notification-time'>{'dfafdadsa'}</div>
+                                                </div>}
+                                            />
+                                            <img src={UnreadIcon} />
+                                        </List.Item>
+                                    </Link>
                                 )}
                             </VirtualList>
                         </List>
