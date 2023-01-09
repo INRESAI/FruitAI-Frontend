@@ -20,6 +20,7 @@ interface CameraState {
     isShowExpandCamera: boolean,
     isShowLog: boolean,
     listCamera: IGetCameraManage[],
+    currentCamera: IGetCameraManage| null,
     dataConnectionCamera: IGetCameraManage | null,
     errorCode: string,
     restartFlag: boolean,
@@ -41,6 +42,7 @@ const initialStateBootstrap: CameraState = {
         //     penId: "62610e5a520f5f7fcf02b282",
         // }
     ],
+    currentCamera: null,
     dataConnectionCamera: null,
     isShowLog: false,
     errorCode: "",
@@ -118,6 +120,21 @@ const cameraSlice = createSlice({
             state.isLoading = false
             state.listCamera.splice(state.listCamera.findIndex((arrow) => arrow.id === action.payload), 1);
 
+        },
+
+        //Get Camera
+        getCameraByIdRequest: (state, action: any) => {
+            state.isLoading = true
+        },
+
+        getCameraByIdSuccess: (state, action: PayloadAction<IGetCameraManage>) => {
+            state.isLoading = false
+            state.currentCamera = action.payload
+            console.log(state.currentCamera)
+        },
+
+        getCameraByIdFail: (state, action: any) => {
+            state.isLoading = false
         },
 
 
@@ -242,11 +259,30 @@ const addNewCamera$: RootEpic = (action$: any) => action$.pipe(
     })
 )
 
+const getCameraById$: RootEpic = (action$: any) => action$.pipe(
+    filter(getCameraByIdRequest.match),
+    switchMap((action: any) => {
+        // const queryString = Utils.querySearchToString(action.payload)
+        console.log(action.payload);
+        const queryString = action.payload;
+
+        return CameraAPI.getCameraById(queryString).pipe(
+            map((res: any) => {
+                console.log(res);
+                return cameraSlice.actions.getCameraByIdSuccess(res.data)
+            }), catchError((err) => {
+                return [cameraSlice.actions.getCameraByIdFail(err.message)]
+            })
+        )
+    })
+)
+
 
 export const CameraEpics = [
     fetchListCamera$,
     restartAnalysisCamera$,
-    addNewCamera$
+    addNewCamera$,
+    getCameraById$
 ]
 
 export const {
@@ -261,6 +297,7 @@ export const {
     addMedia,
     fetchErrorCode,
     restartAnalysisCameraReq,
-    addCameraRequest
+    addCameraRequest,
+    getCameraByIdRequest
 } = cameraSlice.actions;
 export const cameraReducer = cameraSlice.reducer;
