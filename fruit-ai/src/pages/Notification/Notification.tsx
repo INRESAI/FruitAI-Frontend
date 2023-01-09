@@ -37,7 +37,7 @@ const items: MenuProps['items'] = [
         ),
         key: 1,
     }
-    ,{
+    , {
         label: (
             <div className='notification-button' >Chưa xem</div>
         ),
@@ -91,11 +91,11 @@ const Notification = (props: MyProps) => {
     // }, []);
 
     const changeNotificationStatus = (key: string) => {
-        if(key==="2"){
+        if (key === "2") {
             setData(lstSeenNotification)
-        }else if(key==="3"){
+        } else if (key === "3") {
             setData(lstUnSeenNotification)
-        }else{
+        } else {
             setData(lstNotification)
         }
     }
@@ -144,21 +144,24 @@ const Notification = (props: MyProps) => {
                             // onScroll={onScroll}
                             >
                                 {(item: any) => (
-                                    <List.Item key={item.email}>
-                                        <List.Item.Meta
-                                            avatar={
-                                                <Badge>
-                                                    {/* <Avatar src={item.picture.large} /> */}
-                                                    <WarningFilled style={{color: '#0083FC'}} />
-                                                </Badge>}
-                                            title={<div>{item.title}</div>}
-                                            description={<div>
-                                                <div className='notification-des'>{item.content}</div>
-                                                <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
-                                            </div>}
-                                        />
-                                        <img src={UnreadIcon} />
-                                    </List.Item>
+                                    <Link to={{ pathname: `/camera_detail/${item.camera.id}` }} onClick={props.toggleNotification}>
+                                        <List.Item key={item.email}>
+                                            <List.Item.Meta
+                                                avatar={
+                                                    <Badge>
+                                                        {/* <Avatar src={item.picture.large} /> */}
+                                                        <WarningFilled style={{ color: '#0083FC' }} />
+                                                    </Badge>}
+                                                title={<div>{item.title}</div>}
+                                                description={<div>
+                                                    <div className='notification-des'>{item.content}</div>
+                                                    <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
+                                                </div>}
+                                            />
+                                            <img src={UnreadIcon} />
+                                        </List.Item>
+                                    </Link>
+
                                 )}
                             </VirtualList>
                         </List>
