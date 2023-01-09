@@ -7,7 +7,7 @@ import { AddWarehouseRequest } from "../../common/define-warehouse";
 import NotificationAPI from "../../api/notification.api";
 import { GetNotificationRequest, Notification } from "../../common/define-notification";
 interface NotificationState {
-    lstNotification: Notification[] | null,
+    lstNotification: Notification[] ,
     lstSeenNotification: Notification[],
     lstUnSeenNotification: Notification[],
     message: string,

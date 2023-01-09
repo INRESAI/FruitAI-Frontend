@@ -33,15 +33,21 @@ interface UserItem {
 const items: MenuProps['items'] = [
     {
         label: (
-            <div className='notification-button' >Chưa xem</div>
+            <div className='notification-button' >Tất cả</div>
         ),
         key: 1,
+    }
+    ,{
+        label: (
+            <div className='notification-button' >Chưa xem</div>
+        ),
+        key: 2,
     },
     {
         label: (
             <div className='notification-button' >Đã xem</div>
         ),
-        key: 2,
+        key: 3,
     },
     // {
     //     label: (
@@ -64,7 +70,7 @@ const Notification = (props: MyProps) => {
     const { lstNotification, lstSeenNotification, lstUnSeenNotification } = useSelectorRoot((state) => state.notification);
 
     const [itemOnClick, setItemOnClick] = useState<number>(1);
-    const [data, setData] = useState<any[]>(lstSeenNotification);
+    const [data, setData] = useState<any[]>();
 
 
     // const appendData = () => {
@@ -85,10 +91,12 @@ const Notification = (props: MyProps) => {
     // }, []);
 
     const changeNotificationStatus = (key: string) => {
-        if (key === "1") {
+        if(key==="2"){
             setData(lstSeenNotification)
-        } else {
+        }else if(key==="3"){
             setData(lstUnSeenNotification)
+        }else{
+            setData(lstNotification)
         }
     }
 
@@ -125,34 +133,32 @@ const Notification = (props: MyProps) => {
                     />
                 </Sider>
                 <div className='notification-list notification-new'>
-                    <div className='notification-list-title'>Mới nhất</div>
+                    {/* <div className='notification-list-title'>Mới nhất</div> */}
                     <div className='notification-list-item'>
                         <List>
                             <VirtualList
-                                data={data}
+                                data={data ? data : lstNotification} // Lan dau vao se set luon cho la bang lst tong hop thong bao. Cac lan sau se co ham set lai 
                                 height={ContainerHeight}
                                 itemHeight={47}
                                 itemKey="email"
                             // onScroll={onScroll}
                             >
                                 {(item: any) => (
-                                    <Link to={{pathname: `/camera_detail/${item.camera.id}`}} onClick={props.toggleNotification}>
-                                        <List.Item key={item.email}>
-                                            <List.Item.Meta
-                                                avatar={
-                                                    <Badge>
-                                                        {/* <Avatar src={item.picture.large} /> */}
-                                                        <WarningFilled style={{ color: '#0083FC' }} />
-                                                    </Badge>}
-                                                title={<div>{item.title}</div>}
-                                                description={<div>
-                                                    <div className='notification-des'>{item.content}</div>
-                                                    <div className='notification-time'>{'dfafdadsa'}</div>
-                                                </div>}
-                                            />
-                                            <img src={UnreadIcon} />
-                                        </List.Item>
-                                    </Link>
+                                    <List.Item key={item.email}>
+                                        <List.Item.Meta
+                                            avatar={
+                                                <Badge>
+                                                    {/* <Avatar src={item.picture.large} /> */}
+                                                    <WarningFilled style={{color: '#0083FC'}} />
+                                                </Badge>}
+                                            title={<div>{item.title}</div>}
+                                            description={<div>
+                                                <div className='notification-des'>{item.content}</div>
+                                                <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
+                                            </div>}
+                                        />
+                                        <img src={UnreadIcon} />
+                                    </List.Item>
                                 )}
                             </VirtualList>
                         </List>
