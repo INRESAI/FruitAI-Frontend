@@ -112,7 +112,7 @@
 }
 
 .notification-list.notification-new .rc-virtual-list-holder{
-    height: 250px    !important;
+    height: 400px !important;
 }
 .notification-list.notification-before .rc-virtual-list-holder{
     height: 165px !important;

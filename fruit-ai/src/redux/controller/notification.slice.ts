@@ -7,7 +7,7 @@ import { AddWarehouseRequest } from "../../common/define-warehouse";
 import NotificationAPI from "../../api/notification.api";
 import { GetNotificationRequest, Notification } from "../../common/define-notification";
 interface NotificationState {
-    lstNotification: Notification[] ,
+    lstNotification: Notification[],
     lstSeenNotification: Notification[],
     lstUnSeenNotification: Notification[],
     message: string,
@@ -33,24 +33,24 @@ const notificationSlice = createSlice({
     reducers: {
 
         // Call API lay tat ca thong bao
-        getAllNotificationByIdUserRequest(state,action: PayloadAction<GetNotificationRequest>){
+        getAllNotificationByIdUserRequest(state, action: PayloadAction<GetNotificationRequest>) {
             console.log('hahahaha')
             state.loading = true
         },
-        getAllNotificationByIdUserSuccess(state, action: PayloadAction<any>){
-            state.lstNotification=action.payload.items
+        getAllNotificationByIdUserSuccess(state, action: PayloadAction<any>) {
+            state.lstNotification = action.payload.items
             let countInter = 0;
             console.log(state.lstNotification)
             state.lstUnSeenNotification = [] // reset lai mang moi khi call API lay thong bao
             state.lstSeenNotification = [] // reset lai mang moi khi call API lay thong bao
             state.lstNotification?.forEach(item => {
-                if(item.status===0) { //la chua xem
+                if (item.status === 0) { //la chua xem
                     countInter += 1 // Dem cac thong bao chua xem
                     state.lstUnSeenNotification.push(item)
                 }
             })
             state.lstNotification?.forEach(item => {
-                if(item.status===1) { //la da xem
+                if (item.status === 1) { //la da xem
                     state.lstSeenNotification.push(item)
                 }
             })
@@ -59,23 +59,23 @@ const notificationSlice = createSlice({
             console.log(state.lstSeenNotification)
             state.loading = false;
         },
-        getAllNotificationByIdUserFail(state){
+        getAllNotificationByIdUserFail(state) {
             state.loading = false
         },
 
         // Set seen status 
-        setStatusOfNotificationRequest(status, action: PayloadAction<string>){
+        setStatusOfNotificationRequest(status, action: PayloadAction<string>) {
             status.loading = true
 
         },
-        setStatusOfNotificationSuccess(status){
+        setStatusOfNotificationSuccess(status) {
             status.loading = false
 
         },
-        setStatusOfNotificationFail(status){
+        setStatusOfNotificationFail(status) {
             status.loading = false
 
-        } 
+        }
     }
 })
 
@@ -99,34 +99,22 @@ const getAllNotificationByIdUser$: RootEpic = action$ =>
     );
 
 const setNotificationSeenStatus$: RootEpic = action$ =>
-action$.pipe(filter(setStatusOfNotificationRequest.match),
-    switchMap((re) => {
-        
-        return NotificationAPI.setNotificationStatusById(re.payload).pipe(
-            mergeMap((res: any) => {
-                let userId = localStorage.getItem('userId') !== null ? localStorage.getItem('userId') : 'abc'
-                if(userId){
-                    userId = userId.slice(1);
-                    userId = userId.slice(0, userId.length - 1);
-                }
-                return [
-                    notificationSlice.actions.setStatusOfNotificationSuccess(),
-                    // notificationSlice.actions.getAllNotificationByIdUserRequest(
-                    //     {
-
-                    //         userId: userId,
-                    //         additionalProp1: {}
-                    //     }
-                    // )
-                ];
-            }),
-            catchError(err => {
-                console.log(err)
-                return [notificationSlice.actions.getAllNotificationByIdUserFail()]
-            }),
-        );
-    }),
-);
+    action$.pipe(filter(setStatusOfNotificationRequest.match),
+        switchMap((re) => {
+            return NotificationAPI.setNotificationStatusById(re.payload).pipe(
+                mergeMap((res: any) => {
+                    return [
+                        notificationSlice.actions.setStatusOfNotificationSuccess(),
+                        
+                    ];
+                }),
+                catchError(err => {
+                    console.log(err)
+                    return [notificationSlice.actions.getAllNotificationByIdUserFail()]
+                }),
+            );
+        }),
+    );
 
 
 export const NotificationEpics = [
