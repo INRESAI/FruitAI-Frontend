@@ -11,7 +11,7 @@ import PackManager from './pages/Pack/PackManager'
 import StatisticTypeOfFruitByDate from './pages/StatisticTypeOfFruitByDate/StatisticTypeOfFruitByDate'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import store, { persistor, useSelectorRoot } from './redux/store'
+import store, { persistor, useDispatchRoot, useSelectorRoot } from './redux/store'
 import Warehouse from './pages/Warehouse/Warehouse'
 import { useEffect, useState } from 'react'
 const { Content } = Layout;
@@ -38,18 +38,21 @@ const App = () => {
             {/* <SideBar /> */}
             <Layout className="site-layout">
                 <Header />
-                <Content style={{ margin: '0 16px' }}>
-                    {isLogin && !clickedWareHouseId ?  <Warehouse/> : <></>}
-                    <Routes>
-                        <Route path='/' element={<OverView />} />
-                        <Route path='/pack_manager' element={<PackManager />} />
-                        <Route path='/camera_manager' element={<CameraManager />} />
-                        <Route path='/assist' element={<Assist />} />
-                        <Route path='/camera_detail/:cameraId' element={<CameraDetail />} />
-                        <Route path='/statistic' element={<StatisticTypeOfFruitByDate />} />
-                        <Route path='/warehouse' element={<Warehouse />} />
-                    </Routes>
-                </Content>
+                {isLogin && !clickedWareHouseId ? <Warehouse /> : <></>}
+                {clickedWareHouseId ?
+                    <Content style={{ margin: '0 16px' }}>
+                        <Routes>
+                            <Route path='/' element={<OverView />} />
+                            <Route path='/pack_manager' element={<PackManager />} />
+                            <Route path='/camera_manager' element={<CameraManager />} />
+                            <Route path='/assist' element={<Assist />} />
+                            <Route path='/camera_detail/:cameraId' element={<CameraDetail />} />
+                            <Route path='/statistic' element={<StatisticTypeOfFruitByDate />} />
+                            <Route path='/warehouse' element={<Warehouse />} />
+                        </Routes>
+                    </Content> : <></>
+                }
+
             </Layout>
         </Layout>
     )

@@ -18,6 +18,9 @@ import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import Utils from '../../common/utils'
 import { WarehouseRequest } from '../../common/define-fruit'
 import { getAllWarehouseByUserIdRequest } from '../../redux/controller/fruit.slice'
+import { Link } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -36,6 +39,7 @@ export const Header = (props: MyProps) => {
     const [userName, setUserName] = useState<string>('')
     const [userEmail, setUserEmail] = useState<string>('')
     const dispatch = useDispatchRoot();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
@@ -65,8 +69,9 @@ export const Header = (props: MyProps) => {
         }
     }, [isLogin])
     const onClickChooseWareHouse = () => {
-        Utils.removeItemLocalStorage('warehouseId');
+        navigate("/");
         window.location.reload();
+        Utils.removeItemLocalStorage('warehouseId');
     }
     const onClickLogout = () => {
         Utils.removeItemLocalStorage('token');
@@ -97,17 +102,17 @@ export const Header = (props: MyProps) => {
         {
             key: '3',
             label: (
-                <div onClick={onClickChooseWareHouse}>
+                <Link to='/' onClick={onClickChooseWareHouse}>
                     Chọn kho
-                </div>
+                </Link>
             ),
         },
         {
             key: '4',
             label: (
-                <div onClick={onClickLogout}>
+                <Link to='/' onClick={onClickLogout}>
                     Đăng xuất
-                </div>
+                </Link>
             ),
         },
     ];
