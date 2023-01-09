@@ -44,7 +44,7 @@
                 height: 20px;
                 align-self: center;
 
-                .icon-default{
+                .icon-default {
                     margin-bottom: 10px;
                 }
             }
@@ -61,21 +61,31 @@
 
         }
 
-        .ant-table-cell {
-            font-family: 'Lexend Deca';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-            text-align: center;
-            color: #1E1E1E;
+        .MuiTableHead-root {
+            background-color: #CCFFC1;
 
-        }
-
-        .ant-table-thead {
-            .ant-table-cell {
-                background: #CCFFC1;
+            .MuiTableCell-root {
+                font-family: 'Lexend Deca';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 24px;
+                text-align: center;
             }
         }
+
+        .MuiTableBody-root{
+            .MuiTableRow-root{
+                height: 55px;
+                cursor: pointer;
+                .MuiTableCell-root{
+                    border: none;
+                }
+            }
+            .MuiTableRow-root:hover{
+                background-color: #eeffea;
+            }
+        }
+
     }
 }
