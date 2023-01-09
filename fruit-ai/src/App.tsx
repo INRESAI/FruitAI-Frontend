@@ -11,13 +11,16 @@ import PackManager from './pages/Pack/PackManager'
 import StatisticTypeOfFruitByDate from './pages/StatisticTypeOfFruitByDate/StatisticTypeOfFruitByDate'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import store, { persistor, useSelectorRoot } from './redux/store'
+import store, { persistor, useDispatchRoot, useSelectorRoot } from './redux/store'
 import Warehouse from './pages/Warehouse/Warehouse'
 import { useEffect, useState } from 'react'
+import { getAllNotificationByIdUserRequest } from './redux/controller'
 const { Content } = Layout;
 const App = () => {
     const [isLogin, setIsLogin] = useState<string>('')
     const [clickedWareHouseId, setClickedWareHouseId] = useState<string>('')
+
+    const dispatch = useDispatchRoot()
 
     useEffect(() => {
         const checkLogin = localStorage.getItem('token') ? localStorage.getItem('token') : ''
@@ -27,11 +30,32 @@ const App = () => {
     }, []);
 
     useEffect(() => {
+        getAllNotification();
+        
         const warehouseId = localStorage.getItem('warehouseId') ? localStorage.getItem('warehouseId') : '';
         if (warehouseId) {
             setClickedWareHouseId(warehouseId);
         }
     })
+
+    const getAllNotification = () => {
+        setInterval(()=>{
+            console.log('hehehehe')
+            let userId = localStorage.getItem('userId') !== null ? localStorage.getItem('userId') : 'abc'
+            if(userId){
+                userId = userId.slice(1);
+                userId = userId.slice(0, userId.length - 1);
+    
+    
+            }
+            dispatch(getAllNotificationByIdUserRequest({
+    
+                userId: userId,
+                additionalProp1: {}
+            }))
+        },1000)
+    }
+
     return (
         <Layout style={{ minHeight: '100vh' }}>
             {clickedWareHouseId ? <SideBar /> : <></>}
