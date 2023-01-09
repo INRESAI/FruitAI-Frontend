@@ -30,4 +30,10 @@ export default class CameraAPI {
             map((res) => res as AddNewCameraResponse)
         );;
     }
+
+    static getCameraById(cameraId: string): Observable<IGetCameraManage>{
+        return HttpClient.get(`${CameraAPI.host}/camera/${cameraId}`).pipe(
+            map((res) => res as IGetCameraManage)
+        );;
+    }
 }

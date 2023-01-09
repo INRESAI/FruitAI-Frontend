@@ -29,6 +29,9 @@ import { useParams } from 'react-router'
 import CImageLoading from '../../components/video/CImageLoading'
 import StreamAPI from '../../api/camera/streaming.api'
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
+import { IGetCameraManage } from '../../common/models/camera-model'
+import { getCameraByIdRequest } from '../../redux/controller'
 
 interface DataType {
     title?: string;
@@ -136,8 +139,12 @@ const DataCameraList = [
     },
 ];
 const CameraDetail = (props: any) => {
+    let { cameraId } = useParams(); // Lay id truyen qua param react router dom
+
+    const { listCamera, currentCamera } = useSelectorRoot((state) => state.camera);
+    console.log("CameraId:" +cameraId, "List camera" +listCamera);
     const [cameraDetailImage, setCameraDetailImage] = useState<string>(CameraDetailImage)
-    const [cameraDetailName, setCameraDetailName] = useState<string>('Camera 1')
+    const [cameraDetailInfor, setCameraDetailInfor] = useState<any>()
     const [cameraDetailCreateDate, setCameraDetailCreateDate] = useState<Date>(new Date())
     const [initLoading, setInitLoading] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -146,10 +153,24 @@ const CameraDetail = (props: any) => {
     const [step, setStep] = useState<number>(5)
     const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
+    const dispatch = useDispatchRoot()
 
-    let { cameraId } = useParams(); // Lay id truyen qua param react router dom
 
-    console.log(cameraId)
+
+
+
+
+    useEffect(()=>{
+        dispatch(getCameraByIdRequest(cameraId));
+    },[])
+
+
+    useEffect(()=>{
+        if(currentCamera){
+            showDetailInforOfCamera(currentCamera)
+            
+        }
+    },[currentCamera])
 
     useEffect(() => {
         if (count <= DataCameraList.length) {
@@ -164,6 +185,34 @@ const CameraDetail = (props: any) => {
             console.log(count);
         }
     }, [step])
+
+
+    const showDetailInforOfCamera = (currentCamera: any) => {
+        console.log(currentCamera)
+        setCameraDetailInfor(
+            <>
+                <Title className="camera-detail-title" level={3}>
+                    <div className='title-name'>{currentCamera.name}</div>
+                    <div className='title-icon'>
+
+                        {/* Icon sửa camera */}
+                        <img alt='' src={EditIcon} /> 
+
+                        {/* Icon xóa camera */}
+                        <img alt='' src={DeleteIcon} />
+                    </div>
+                </Title>
+                <div className='camera-detail-date'>
+                    <label>Ngày nhập:</label>
+                    <div style={{ marginLeft: 5 }}>{cameraDetailCreateDate.toLocaleDateString()}</div>
+                </div>
+                <div className='camera-detail-note'>
+                    Ghi chú: {currentCamera.note}
+                    {/* Lorem ipsum dolor sit amet consectetur. Id quis fermentum quis nulla semper sit fusce tempor. Tempus ultricies justo mauris turpis feugiat dignissim feugiat sit. Ultricies montes auctor at risus. Amet dictum diam nullam praesent viverra elementum. In ut sit tortor sed mi amet viverra nibh eros. Fringilla mollis blandit blandit erat molestie ut natoque eu vel. */}
+                </div>
+            </>
+        )
+    }
 
     const onLoadMore = () => {
         if (count <= DataCameraList.length) {
@@ -220,20 +269,7 @@ const CameraDetail = (props: any) => {
                     /> :
                     <div>Loading....</div>
                 }
-                <Title className="camera-detail-title" level={3}>
-                    <div className='title-name'>{cameraDetailName}</div>
-                    <div className='title-icon'>
-                        <img alt='' src={EditIcon} />
-                        <img alt='' src={DeleteIcon} />
-                    </div>
-                </Title>
-                <div className='camera-detail-date'>
-                    <label>Ngày nhập:</label>
-                    <div style={{ marginLeft: 5 }}>{cameraDetailCreateDate.toLocaleDateString()}</div>
-                </div>
-                <div className='camera-detail-note'>
-                    Ghi chú: Lorem ipsum dolor sit amet consectetur. Id quis fermentum quis nulla semper sit fusce tempor. Tempus ultricies justo mauris turpis feugiat dignissim feugiat sit. Ultricies montes auctor at risus. Amet dictum diam nullam praesent viverra elementum. In ut sit tortor sed mi amet viverra nibh eros. Fringilla mollis blandit blandit erat molestie ut natoque eu vel.
-                </div>
+                {cameraDetailInfor}
                 <div className='camera-detail-link'>
                     <div className='link-url'>Link: https://www.fruitmanagement.vn/watch?v=cH4E_t3m3xM&list=RDcH4E_t3m3xM&start_radio=1</div>
                     <Button className='camera-detail-button'>

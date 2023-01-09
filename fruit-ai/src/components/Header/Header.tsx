@@ -30,6 +30,9 @@ interface MyProps {
 
 export const Header = (props: MyProps) => {
 
+
+    
+
     const [isLogin, setIsLogin] = useState<string>('')
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
     const [isOpenRegisterModal, setIsOpenRegisterModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal registration hay chưa
@@ -38,6 +41,11 @@ export const Header = (props: MyProps) => {
     const [cameraIcon, setCameraIcon] = useState<string>(AddCamera) // Camera icon
     const [userName, setUserName] = useState<string>('')
     const [userEmail, setUserEmail] = useState<string>('')
+    // const [numberOfUnseenNotification,setNumberOfUnseenNotification] = useState(9);
+
+    const { lstNotification, numberOfUnseenNotification} = useSelectorRoot((state) => state.notification);
+
+
     const dispatch = useDispatchRoot();
     const navigate = useNavigate();
 
@@ -51,7 +59,23 @@ export const Header = (props: MyProps) => {
             setUserEmail(usermail ? usermail : '');
             setUserName(username ? username : '');
         }
+        console.log('lstNotification')
+
     });
+
+    // const countUnseenNotification = ()=>{
+    //     let countInter = 0;
+    //     lstNotification?.forEach(item => {
+    //         if(item.status===0) countInter +=1
+    //     })
+    //     return countInter
+    // }
+
+    useEffect(()=>{
+        console.log(numberOfUnseenNotification)
+    },[lstNotification])
+
+
 
     useEffect(() => {
         if (isLogin) {
@@ -68,6 +92,7 @@ export const Header = (props: MyProps) => {
             }
         }
     }, [isLogin])
+
     const onClickChooseWareHouse = () => {
         navigate("/");
         window.location.reload();
@@ -116,6 +141,8 @@ export const Header = (props: MyProps) => {
             ),
         },
     ];
+
+    
 
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
@@ -170,13 +197,14 @@ export const Header = (props: MyProps) => {
                                 {/* <div className='header-number-notification'> */}
                                 {/* <span className='number-noti'>4</span> */}
                                 {/* </div> */}
-                                <Badge count={4}>
+                                <Badge count={numberOfUnseenNotification}>
                                     <img src={NotificationIcon} />
                                 </Badge>
                             </div>
                             <Notification
                                 isOpenModal={isOpenNotification}
                                 toggleNotification={toggleNotification}
+                                
                             />
                             <Dropdown menu={{ items }} placement="bottomLeft" arrow>
                                 <Avatar className='header-avatar' src={UserIcon} />
