@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Camera, IGetCameraManage } from "../../common/models/camera-model";
+import { AddNewCameraRequest, Camera, IGetCameraManage } from "../../common/models/camera-model";
 import Utils from "../../common/utils";
 // import { rootEpic } from ;
 import { catchError, filter, map, mergeMap, switchMap } from "rxjs/operators";
@@ -89,6 +89,12 @@ const cameraSlice = createSlice({
             // })
             state.isLoading = false
         },
+
+
+
+        addCameraRequest: (state,action: PayloadAction<AddNewCameraRequest>) => {
+            state.isLoading = true;
+        },
         addCameraSuccess: (state, action: PayloadAction<IGetCameraManage | null>) => {
             state.isLoading = false
             state.message = ""
@@ -113,6 +119,9 @@ const cameraSlice = createSlice({
             state.listCamera.splice(state.listCamera.findIndex((arrow) => arrow.id === action.payload), 1);
 
         },
+
+
+
         addMedia: (state, action: PayloadAction<IGetCameraManage>) => {
             if (state.listCamera?.findIndex === undefined) state.listCamera = [];
             if (action.payload && action.payload.id) {
@@ -143,6 +152,7 @@ const cameraSlice = createSlice({
             state.restartFlag = false;
             // openNotification(NotificationType.Error, 'topLeft', `PIGMAN`, `${action?.payload?.message}.\n`);
         },
+
         // importPigRequest: (state, action: PayloadAction<IImportPigExpanded>) => {
         //     const data: IImportPig = { ...action.payload }
         //     // setTimeout(() => {
@@ -215,9 +225,28 @@ const restartAnalysisCamera$: RootEpic = (action$: any) => action$.pipe(
     })
 )
 
+const addNewCamera$: RootEpic = (action$: any) => action$.pipe(
+    filter(addCameraRequest.match),
+    switchMap((action: any) => {
+        console.log(action.payload);
+        return CameraAPI.addNewCamera(action.payload).pipe(
+            mergeMap((res: any) => {
+                return [
+                    cameraSlice.actions.addCameraSuccess(res.data),
+                    cameraSlice.actions.fetchListCameraRequest(action.payload.warehouseId)
+                ]
+            }), catchError((err) => {
+                return [cameraSlice.actions.messageError(err.message), cameraSlice.actions.restartAnalysisCameraFailed(err)]
+            })
+        )
+    })
+)
+
+
 export const CameraEpics = [
     fetchListCamera$,
-    restartAnalysisCamera$
+    restartAnalysisCamera$,
+    addNewCamera$
 ]
 
 export const {
@@ -231,6 +260,7 @@ export const {
     setDefaultSate,
     addMedia,
     fetchErrorCode,
-    restartAnalysisCameraReq
+    restartAnalysisCameraReq,
+    addCameraRequest
 } = cameraSlice.actions;
 export const cameraReducer = cameraSlice.reducer;

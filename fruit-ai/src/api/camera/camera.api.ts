@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Camera, IGetCameraManage } from '../../common/models/camera-model';
+import { AddNewCameraRequest, AddNewCameraResponse, Camera, IGetCameraManage } from '../../common/models/camera-model';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from "rxjs/operators";
 import { CFG_BASE_URL } from '../../constants/config';
@@ -23,5 +23,11 @@ export default class CameraAPI {
         // return HttpClient.get(`${CameraAPI.host}/camera/warehouse?warehouseId=${warehouseId}`).pipe(
         //     map((res) => res as Camera[] || [])
         // );
+    }
+
+    static addNewCamera(param: AddNewCameraRequest): Observable<AddNewCameraResponse>{
+        return HttpClient.post(`${CameraAPI.host}/camera`,param).pipe(
+            map((res) => res as AddNewCameraResponse)
+        );;
     }
 }
