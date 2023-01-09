@@ -7,18 +7,24 @@ import { AddWarehouseRequest } from "../../common/define-warehouse";
 import NotificationAPI from "../../api/notification.api";
 import { GetNotificationRequest, Notification } from "../../common/define-notification";
 interface NotificationState {
-    lstNotification: Notification[] | null
+    lstNotification: Notification[] | null,
+    lstSeenNotification: Notification[],
+    lstUnSeenNotification: Notification[],
     message: string,
     loading: boolean,
     successRes: any,
-    failRes: any
+    failRes: any,
+    numberOfUnseenNotification: number
 }
 const initialStateBootstrap: NotificationState = {
     lstNotification: [],
+    lstSeenNotification: [],
+    lstUnSeenNotification: [],
     message: '',
     loading: false,
     successRes: null,
-    failRes: null
+    failRes: null,
+    numberOfUnseenNotification: 0
 }
 
 const notificationSlice = createSlice({
@@ -31,8 +37,26 @@ const notificationSlice = createSlice({
             console.log('hahahaha')
             state.loading = true
         },
-        getAllNotificationByIdUserSuccess(state, action: PayloadAction<Notification[]>){
-            state.lstNotification=action.payload
+        getAllNotificationByIdUserSuccess(state, action: PayloadAction<any>){
+            state.lstNotification=action.payload.items
+            let countInter = 0;
+            console.log(state.lstNotification)
+            state.lstUnSeenNotification = [] // reset lai mang moi khi call API lay thong bao
+            state.lstSeenNotification = [] // reset lai mang moi khi call API lay thong bao
+            state.lstNotification?.forEach(item => {
+                if(item.status===0) { //la chua xem
+                    countInter += 1 // Dem cac thong bao chua xem
+                    state.lstUnSeenNotification.push(item)
+                }
+            })
+            state.lstNotification?.forEach(item => {
+                if(item.status===1) { //la da xem
+                    state.lstSeenNotification.push(item)
+                }
+            })
+            state.numberOfUnseenNotification = countInter
+            console.log(state.lstUnSeenNotification)
+            console.log(state.lstSeenNotification)
             state.loading = false;
         },
         getAllNotificationByIdUserFail(state){
@@ -87,13 +111,13 @@ action$.pipe(filter(setStatusOfNotificationRequest.match),
                 }
                 return [
                     notificationSlice.actions.setStatusOfNotificationSuccess(),
-                    notificationSlice.actions.getAllNotificationByIdUserRequest(
-                        {
+                    // notificationSlice.actions.getAllNotificationByIdUserRequest(
+                    //     {
 
-                            userId: userId,
-                            additionalProp1: {}
-                        }
-                    )
+                    //         userId: userId,
+                    //         additionalProp1: {}
+                    //     }
+                    // )
                 ];
             }),
             catchError(err => {

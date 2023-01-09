@@ -27,9 +27,20 @@ const App = () => {
         if (checkLogin) {
             setIsLogin(checkLogin);
         }
+        let userId = localStorage.getItem('userId') !== null ? localStorage.getItem('userId') : 'abc'
+        if(userId){
+            userId = userId.slice(1);
+            userId = userId.slice(0, userId.length - 1);
+        }
+        dispatch(getAllNotificationByIdUserRequest({
+
+            userId: userId,
+            additionalProp1: {}
+        }))
     }, []);
 
     useEffect(() => {
+
         getAllNotification();
         
         const warehouseId = localStorage.getItem('warehouseId') ? localStorage.getItem('warehouseId') : '';
@@ -53,7 +64,7 @@ const App = () => {
                 userId: userId,
                 additionalProp1: {}
             }))
-        },1000)
+        },10000)
     }
 
     return (

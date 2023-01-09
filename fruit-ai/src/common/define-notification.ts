@@ -7,7 +7,7 @@ export interface Notification{
     content: string;
     time: Date;
     status: number; // Da xem thong bao hay chua. 1 la da xem, 0 la chua xem
-    isNew: number; // Tin con moi hay la cu. 1 la moi, 0 la cu
+    // isNew: number; // Tin con moi hay la cu. 1 la moi, 0 la cu
     camera: Camera
 }
 

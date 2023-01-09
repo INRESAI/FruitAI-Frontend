@@ -10,8 +10,6 @@ import HttpClient from "./http-client";
 export default class NotificationAPI {
     static host = CFG_BASE_URL;
 
-    
-
     static getAllNotificationByIdUser(param: GetNotificationRequest): Observable<Notification[] | []> {
         console.log('Tao met lam roi do')
         return HttpClient.post(`${NotificationAPI.host}/notification/ownerId`,param).pipe(
@@ -24,5 +22,4 @@ export default class NotificationAPI {
             map((res) => res as Notification)
         );
     }
-
 }

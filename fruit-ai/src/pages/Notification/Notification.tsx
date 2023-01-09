@@ -1,4 +1,4 @@
-import { MoreOutlined } from '@ant-design/icons';
+import { MoreOutlined, WarningFilled, WarningOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Form, List, Menu, MenuProps, Modal } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import Sider from 'antd/es/layout/Sider';
 import ExportIcon from '../../images/icon_export.png';
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
+import { useSelectorRoot } from '../../redux/store';
+
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
@@ -30,57 +32,70 @@ interface UserItem {
 const items: MenuProps['items'] = [
     {
         label: (
-            <div className='notification-button' >Tất cả 09</div>
+            <div className='notification-button' >Chưa xem</div>
         ),
         key: 1,
     },
     {
         label: (
-            <div className='notification-button' >Cảnh cáo 04</div>
+            <div className='notification-button' >Đã xem</div>
         ),
         key: 2,
     },
-    {
-        label: (
-            <div className='notification-button' >Xuất 05</div>
-        ),
-        key: 3,
-    },
-    {
-        label: (
-            <div className='notification-button' >Nhập 03</div>
-        ),
-        key: 4,
-    },
+    // {
+    //     label: (
+    //         <div className='notification-button' >Xuất 05</div>
+    //     ),
+    //     key: 3,
+    // },
+    // {
+    //     label: (
+    //         <div className='notification-button' >Nhập 03</div>
+    //     ),
+    //     key: 4,
+    // },
 ];
 const fakeDataUrl =
     'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
 const ContainerHeight = 400;
 const Notification = (props: MyProps) => {
 
+    const { lstNotification, lstSeenNotification, lstUnSeenNotification} = useSelectorRoot((state) => state.notification);
 
     const [itemOnClick, setItemOnClick] = useState<number>(1);
-    const [data, setData] = useState<UserItem[]>([]);
+    const [data, setData] = useState<any[]>(lstSeenNotification);
 
 
-    const appendData = () => {
-        fetch(fakeDataUrl)
-            .then((res) => res.json())
-            .then((body) => {
-                setData(data.concat(body.results));
-            });
-    };
+    // const appendData = () => {
+    //     fetch(fakeDataUrl)
+    //         .then((res) => res.json())
+    //         .then((body) => {
+    //             setData(data.concat(body.results));
+    //         });
+    // };
+
     useEffect(() => {
         console.log(itemOnClick);
+        
     })
-    useEffect(() => {
-        appendData();
-    }, []);
-    const onScroll = (e: React.UIEvent<HTMLElement, UIEvent>) => {
-        if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
-            appendData();
+
+    // useEffect(() => {
+    //     appendData();
+    // }, []);
+
+    const changeNotificationStatus = (key: string) => {
+        if(key==="1"){
+            setData(lstSeenNotification)
+        }else{
+            setData(lstUnSeenNotification)
         }
-    };
+    }
+
+    // const onScroll = (e: React.UIEvent<HTMLElement, UIEvent>) => {
+    //     if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
+    //         appendData();
+    //     }
+    // };
 
     return (
         <Modal
@@ -105,7 +120,7 @@ const Notification = (props: MyProps) => {
                         defaultSelectedKeys={['1']}
                         mode="inline"
                         items={items}
-                        onClick={({ key }) => { setItemOnClick(parseInt(key)) }}
+                        onClick={({ key }) => { changeNotificationStatus(key) }}
                     />
                 </Sider>
                 <div className='notification-list notification-new'>
@@ -117,19 +132,20 @@ const Notification = (props: MyProps) => {
                                 height={ContainerHeight}
                                 itemHeight={47}
                                 itemKey="email"
-                                onScroll={onScroll}
+                                // onScroll={onScroll}
                             >
-                                {(item: UserItem) => (
+                                {(item: any) => (
                                     <List.Item key={item.email}>
                                         <List.Item.Meta
                                             avatar={
-                                                <Badge count={<img src={ExportIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
-                                                    <Avatar src={item.picture.large} />
+                                                <Badge>
+                                                    {/* <Avatar src={item.picture.large} /> */}
+                                                    <WarningFilled style={{color: '#0083FC'}} />
                                                 </Badge>}
-                                            title={<a href="https://ant.design">{item.name.last}</a>}
+                                            title={<div>{item.title}</div>}
                                             description={<div>
-                                                <div className='notification-des'>{item.email}</div>
-                                                <div className='notification-time'>1 phút trước</div>
+                                                <div className='notification-des'>{item.content}</div>
+                                                <div className='notification-time'>{'dfafdadsa'}</div>
                                             </div>}
                                         />
                                         <img src={UnreadIcon} />
@@ -139,7 +155,7 @@ const Notification = (props: MyProps) => {
                         </List>
                     </div>
                 </div>
-                <div className='notification-list notification-before'>
+                {/* <div className='notification-list notification-before'>
                     <div className='notification-list-title'>Trước đây</div>
                     <div className='notification-list-item'>
                         <List>
@@ -173,7 +189,7 @@ const Notification = (props: MyProps) => {
                             </VirtualList>
                         </List>
                     </div>
-                </div>
+                </div> */}
             </Form>
         </Modal>
     )
