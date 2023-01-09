@@ -8,6 +8,7 @@ import ExportIcon from '../../images/icon_export.png';
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
 import { useSelectorRoot } from '../../redux/store';
+import { Link } from 'react-router-dom';
 
 interface MyProps {
     isOpenModal: boolean;
@@ -66,7 +67,7 @@ const fakeDataUrl =
 const ContainerHeight = 400;
 const Notification = (props: MyProps) => {
 
-    const { lstNotification, lstSeenNotification, lstUnSeenNotification} = useSelectorRoot((state) => state.notification);
+    const { lstNotification, lstSeenNotification, lstUnSeenNotification } = useSelectorRoot((state) => state.notification);
 
     const [itemOnClick, setItemOnClick] = useState<number>(1);
     const [data, setData] = useState<any[]>();
@@ -82,6 +83,7 @@ const Notification = (props: MyProps) => {
 
     useEffect(() => {
         console.log(itemOnClick);
+
 
     })
 
@@ -140,7 +142,7 @@ const Notification = (props: MyProps) => {
                                 height={ContainerHeight}
                                 itemHeight={47}
                                 itemKey="email"
-                                // onScroll={onScroll}
+                            // onScroll={onScroll}
                             >
                                 {(item: any) => (
                                     <List.Item key={item.email}>
