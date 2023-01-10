@@ -4,7 +4,10 @@ import VirtualList from 'rc-virtual-list';
 import { useEffect, useState } from 'react';
 // import 'react-pro-sidebar/dist/css/styles.css';
 import Sider from 'antd/es/layout/Sider';
-import ExportIcon from '../../images/icon_export.png';
+// import ExportIcon from '../../images/icon_export.png';
+// import  WarningIcon  from '../../images/warning.png';
+import  WarningIcon  from '../../images/icon_warning.png';
+
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
@@ -130,8 +133,8 @@ const Notification = (props: MyProps) => {
                                         <List.Item key={item.email} onClick={() => handleOnClickNotification(item.id)}>
                                             <List.Item.Meta
                                                 avatar={
-                                                    <Badge>
-                                                        <WarningFilled style={{ color: '#0083FC' }} />
+                                                    <Badge count={<img src={WarningIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
+                                                        <Avatar src={`http://178.128.19.31:4600/rtc/noti/${item.id}`} />
                                                     </Badge>}
                                                 title={<div>{item.title}</div>}
                                                 description={<div>
