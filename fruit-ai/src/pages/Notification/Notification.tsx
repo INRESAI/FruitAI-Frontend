@@ -10,7 +10,7 @@ import './notification.css';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
 import { Link } from 'react-router-dom';
 import { setStatusOfNotificationRequest } from '../../redux/controller/notification.slice';
-
+import  WarningIcon  from '../../images/icon_warning.png';
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
@@ -167,8 +167,8 @@ const Notification = (props: MyProps) => {
                                         <List.Item key={item.email} onClick={() => handleOnClickNotification(item.id)}>
                                             <List.Item.Meta
                                                 avatar={
-                                                    <Badge>
-                                                        <WarningFilled style={{ color: '#0083FC' }} />
+                                                    <Badge count={<img src={WarningIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
+                                                        <Avatar src={`http://178.128.19.31:4600/rtc/noti/${item.id}`} />
                                                     </Badge>}
                                                 title={<div>{item.title}</div>}
                                                 description={<div>
