@@ -64,7 +64,7 @@ const App = () => {
                 userId: userId,
                 additionalProp1: {}
             }))
-        },10000)
+        },3000)
     }
 
     return (
