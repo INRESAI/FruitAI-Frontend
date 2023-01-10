@@ -140,7 +140,8 @@ const Video: FC = () => {
 
     useEffect( () => {
          // Lay danh sach camera theo id nha kho
-
+        console.log(listCamera);
+        
         initRtcCamera() // Do cau truc cua lon la 1 trai co nhieu chuong, 1 chuong nhieu camera. con fruit la 1 trai nhieu cam, 1 cam 1 dong 
         getAllPenEmptys()
     }, [listCamera])
@@ -167,7 +168,7 @@ const Video: FC = () => {
                                         hoverable
                                         cover={
                                             <CImageLoading
-                                                src={StreamAPI.getStream(camera.id)}
+                                                src={`http://178.128.19.31:4600/rtc/preview?id=${camera.id}`}
                                                 className="h-56"
                                                 uuid={uuidv4()}
                                                 isFullScreen={isFullScreen}
