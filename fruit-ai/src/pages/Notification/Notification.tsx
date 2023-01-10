@@ -10,7 +10,7 @@ import './notification.css';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
 import { Link } from 'react-router-dom';
 import { setStatusOfNotificationRequest } from '../../redux/controller/notification.slice';
-import  WarningIcon  from '../../images/icon_warning.png';
+import WarningIcon from '../../images/icon_warning.png';
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
@@ -86,7 +86,7 @@ const Notification = (props: MyProps) => {
 
     const formatTime = (item: any) => {
         // function timeSince(date) {
-        
+
         const currentTime = new Date(); //Ngay gio hien tai
         const createdTime = new Date(item.time); //Ngay gio thong bao duoc tao ra
         console.log(item);
@@ -94,9 +94,9 @@ const Notification = (props: MyProps) => {
         console.log("Thoi gian thong bao duoc tao: ", createdTime)
 
         var seconds = Math.floor((currentTime.getTime() - createdTime.getTime()) / 1000);
-        
+
         var interval = seconds / 31536000;
-        
+
         if (interval > 1) {
             return <div>{Math.floor(interval) + " năm"} trước</div>
         }
@@ -118,7 +118,7 @@ const Notification = (props: MyProps) => {
         }
         return <div>{Math.floor(seconds) + " giây"} trước</div>;
         //   }
-    
+
     }
     // const onScroll = (e: React.UIEvent<HTMLElement, UIEvent>) => {
     //     if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
@@ -170,13 +170,14 @@ const Notification = (props: MyProps) => {
                                                     <Badge count={<img src={WarningIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
                                                         <Avatar src={`http://178.128.19.31:4600/rtc/noti/${item.id}`} />
                                                     </Badge>}
-                                                title={<div>{item.title}</div>}
+                                                title={item.status === 0 ? <div>{item.title}</div> : <div style={{ color:"#858585" }}>{item.title}</div>}
                                                 description={<div>
                                                     <div className='notification-des'>{item.content}</div>
-                                                    <div className='notification-time'>{formatTime(item)}</div>
+                                                    {item.status === 0 ? <div className='notification-time'>{formatTime(item)}</div> : <div className='notification-time' style={{ color:"#858585" }}>{formatTime(item)}</div>}
+                                                    {/* <div className='notification-time'>{formatTime(item)}</div> */}
                                                 </div>}
                                             />
-                                            <img src={UnreadIcon} />
+                                            {item.status === 0 ? <img src={UnreadIcon} /> : <></>}
                                         </List.Item>
                                     </Link>
 
