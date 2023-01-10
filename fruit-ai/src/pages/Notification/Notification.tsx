@@ -4,10 +4,7 @@ import VirtualList from 'rc-virtual-list';
 import { useEffect, useState } from 'react';
 // import 'react-pro-sidebar/dist/css/styles.css';
 import Sider from 'antd/es/layout/Sider';
-// import ExportIcon from '../../images/icon_export.png';
-// import  WarningIcon  from '../../images/warning.png';
-import  WarningIcon  from '../../images/icon_warning.png';
-
+import ExportIcon from '../../images/icon_export.png';
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
@@ -86,6 +83,43 @@ const Notification = (props: MyProps) => {
         dispatch(setStatusOfNotificationRequest(id));
         props.toggleNotification();
     }
+
+    const formatTime = (item: any) => {
+        // function timeSince(date) {
+        
+        const currentTime = new Date(); //Ngay gio hien tai
+        const createdTime = new Date(item.time); //Ngay gio thong bao duoc tao ra
+        console.log(item);
+        console.log("Thời gian hiện tại: ", currentTime);
+        console.log("Thoi gian thong bao duoc tao: ", createdTime)
+
+        var seconds = Math.floor((currentTime.getTime() - createdTime.getTime()) / 1000);
+        
+        var interval = seconds / 31536000;
+        
+        if (interval > 1) {
+            return <div>{Math.floor(interval) + " năm"} trước</div>
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+            return <div>{Math.floor(interval) + " tháng"} trước</div>;
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+            return <div>{Math.floor(interval) + " ngày"} trước</div>;
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+            return <div>{Math.floor(interval) + " giờ"} trước</div>;
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+            return <div>{Math.floor(interval) + " phút"} trước</div>;
+        }
+        return <div>{Math.floor(seconds) + " giây"} trước</div>;
+        //   }
+    
+    }
     // const onScroll = (e: React.UIEvent<HTMLElement, UIEvent>) => {
     //     if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
     //         appendData();
@@ -133,13 +167,13 @@ const Notification = (props: MyProps) => {
                                         <List.Item key={item.email} onClick={() => handleOnClickNotification(item.id)}>
                                             <List.Item.Meta
                                                 avatar={
-                                                    <Badge count={<img src={WarningIcon} style={{ height: 20, width: 20 }} />} offset={[-10, 50]}>
-                                                        <Avatar src={`http://178.128.19.31:4600/rtc/noti/${item.id}`} />
+                                                    <Badge>
+                                                        <WarningFilled style={{ color: '#0083FC' }} />
                                                     </Badge>}
                                                 title={<div>{item.title}</div>}
                                                 description={<div>
                                                     <div className='notification-des'>{item.content}</div>
-                                                    <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
+                                                    <div className='notification-time'>{formatTime(item)}</div>
                                                 </div>}
                                             />
                                             <img src={UnreadIcon} />
