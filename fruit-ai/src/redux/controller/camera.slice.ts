@@ -99,10 +99,10 @@ const cameraSlice = createSlice({
         },
         addCameraSuccess: (state, action: PayloadAction<IGetCameraManage | null>) => {
             state.isLoading = false
-            state.message = ""
-            if (action.payload) {
-                state.listCamera.push(action.payload)
-            }
+            // state.message = ""
+            // if (action.payload) {
+            //     state.listCamera.push(action.payload)
+            // }
         },
         connectionCamera: (state, action: PayloadAction<IGetCameraManage | null>) => {
             state.dataConnectionCamera = action.payload;
