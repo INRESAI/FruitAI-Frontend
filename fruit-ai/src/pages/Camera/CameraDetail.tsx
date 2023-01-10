@@ -278,7 +278,7 @@ const CameraDetail = (props: any) => {
                     </Button>
                 </div>
             </div>
-            <div className='camera-detail-right'>
+            {/* <div className='camera-detail-right'>
                 <List
                     className="camera-detail-list"
                     dataSource={data}
@@ -297,7 +297,7 @@ const CameraDetail = (props: any) => {
                         </List.Item>
                     )}
                 />
-            </div>
+            </div> */}
         </div>
     )
 }

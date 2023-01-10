@@ -47,7 +47,10 @@ interface Properties extends Props {
         offer: RTCSessionDescription | null
     ) => Promise<Response>;
     onFinishLoad?: (status: string, media?: MediaStream) => void;
-    url?: string
+    url?: string;
+    userId: string;
+    cameraId: string | undefined;
+    token: string;
 }
 
 const CameraWebRtcComponent = ({
@@ -159,9 +162,24 @@ const CameraWebRtcComponent = ({
                     if (getOfferOnRemote !== undefined) {
                         return getOfferOnRemote(offer);
                     }
+                    console.log(
+                        "----------------------Im checking right here------------------------"
+                        ,{
+                            // ...data,
+                            cameraId: props.cameraId,
+                            userId: props.userId,
+                            token: props.token,
+                            sdp: offer?.sdp,
+                            type: offer?.type,
+                            url: props.url
+                        }
+                    )
                     return fetch(host, {
                         body: JSON.stringify({
                             // ...data,
+                            cameraId: props.cameraId,
+                            userId: props.userId,
+                            token: props.token,
                             sdp: offer?.sdp,
                             type: offer?.type,
                             url: props.url

@@ -89,7 +89,7 @@ const Notification = (props: MyProps) => {
 
     // useEffect(() => {
     //     appendData();
-    // }, []);
+    // }, [lstNotification,]);
 
     const changeNotificationStatus = (key: string) => {
         if(key==="2"){

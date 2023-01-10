@@ -145,14 +145,27 @@ function CImageLoading({
     const [isReloadImage, setIsReloadImage] = useState<boolean>(false);
     const [intervalId, setIntervalId] = useState<any>();
     const [data, setData] = useState({ cameraId: idCamera });
+    const [currentUserId,setCurrentUserId] = useState<any>(); // Lấy userId hiện tại để call API streaming
+    const [currentToken,setCurrentToken] = useState<any>()
     const ref = useRef<HTMLImageElement>(null);
     const dispatch = useDispatch();
+
+    
 
     useEffect(() => {
         //componentWillUnmount
         // return () => {
         //     terminateStreamingVideoByUuId();
         // };
+        let userId = localStorage.getItem('userId')
+        let token = localStorage.getItem('token')
+        if(userId){
+            userId = userId.slice(1);
+            userId = userId.slice(0, userId.length - 1);
+        }
+        setCurrentUserId(userId);
+        setCurrentToken(token);
+
     }, []);
 
     // const terminateStreamingVideoByUuId = () => {
@@ -240,9 +253,12 @@ function CImageLoading({
                             </div>
                         )}
 
-                        {(!isShowNotContent) ? (
+                        {(!isShowNotContent && currentUserId && currentToken) ? (
                             enableRTC ? (
                                 <CameraWebRtc
+                                    userId= {currentUserId}
+                                    cameraId= {idCamera}
+                                    token = {currentToken}
                                     url={camera?.link}
                                     onClick={onClick}
                                     data={data}
