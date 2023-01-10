@@ -26,15 +26,15 @@ const SideBar: React.FC = () => {
             ),
             key: 1,
         },
-        // {
-        //     label: (
-        //         <Link to='/pack_manager'>
-        //             <img src={itemOnClick !== '2' ? PackIcon : PackActiveIcon} alt='' />
-        //             <span>Lô</span>
-        //         </Link>
-        //     ),
-        //     key: 2,
-        // },
+        {
+            label: (
+                <Link to='/pack_manager'>
+                    <img src={itemOnClick !== '2' ? PackIcon : PackActiveIcon} alt='' />
+                    <span>Lô</span>
+                </Link>
+            ),
+            key: 2,
+        },
         {
             label: (
                 <Link to='/camera_manager'>
