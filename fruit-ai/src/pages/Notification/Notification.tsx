@@ -7,29 +7,14 @@ import Sider from 'antd/es/layout/Sider';
 import ExportIcon from '../../images/icon_export.png';
 import UnreadIcon from '../../images/icon_unread.png';
 import './notification.css';
-import { useSelectorRoot } from '../../redux/store';
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store';
 import { Link } from 'react-router-dom';
+import { setStatusOfNotificationRequest } from '../../redux/controller/notification.slice';
 
 interface MyProps {
     isOpenModal: boolean;
     toggleNotification: () => void;
 }
-interface UserItem {
-    email: string;
-    gender: string;
-    name: {
-        first: string;
-        last: string;
-        title: string;
-    };
-    nat: string;
-    picture: {
-        large: string;
-        medium: string;
-        thumbnail: string;
-    };
-}
-
 const items: MenuProps['items'] = [
     {
         label: (
@@ -37,38 +22,27 @@ const items: MenuProps['items'] = [
         ),
         key: 1,
     }
-    ,{
+    , {
         label: (
-            <div className='notification-button' >Chưa xem</div>
+            <div className='notification-button' >Đã xem</div>
         ),
         key: 2,
     },
     {
         label: (
-            <div className='notification-button' >Đã xem</div>
+            <div className='notification-button' >Chưa xem</div>
         ),
         key: 3,
     },
-    // {
-    //     label: (
-    //         <div className='notification-button' >Xuất 05</div>
-    //     ),
-    //     key: 3,
-    // },
-    // {
-    //     label: (
-    //         <div className='notification-button' >Nhập 03</div>
-    //     ),
-    //     key: 4,
-    // },
+
 ];
-const fakeDataUrl =
-    'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
+
 const ContainerHeight = 400;
 const Notification = (props: MyProps) => {
 
     const { lstNotification, lstSeenNotification, lstUnSeenNotification } = useSelectorRoot((state) => state.notification);
-
+    const dispatch = useDispatchRoot()
+    const [statusNotification, setStatusNotification] = useState<string>('1');
     const [itemOnClick, setItemOnClick] = useState<number>(1);
     const [data, setData] = useState<any[]>();
 
@@ -82,25 +56,33 @@ const Notification = (props: MyProps) => {
     // };
 
     useEffect(() => {
-        console.log(itemOnClick);
-
-
-    })
+        if (statusNotification === "2") {
+            setData(lstSeenNotification)
+        } else if (statusNotification === "3") {
+            setData(lstUnSeenNotification)
+        } else {
+            setData(lstNotification)
+        }
+    }, [lstSeenNotification])
 
     // useEffect(() => {
     //     appendData();
     // }, [lstNotification,]);
 
     const changeNotificationStatus = (key: string) => {
-        if(key==="2"){
+        setStatusNotification(key);
+        if (key === "2") {
             setData(lstSeenNotification)
-        }else if(key==="3"){
+        } else if (key === "3") {
             setData(lstUnSeenNotification)
-        }else{
+        } else {
             setData(lstNotification)
         }
     }
-
+    const handleOnClickNotification = (id: string) => {
+        dispatch(setStatusOfNotificationRequest(id));
+        props.toggleNotification();
+    }
     // const onScroll = (e: React.UIEvent<HTMLElement, UIEvent>) => {
     //     if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === ContainerHeight) {
     //         appendData();
@@ -142,24 +124,25 @@ const Notification = (props: MyProps) => {
                                 height={ContainerHeight}
                                 itemHeight={47}
                                 itemKey="email"
-                            // onScroll={onScroll}
                             >
                                 {(item: any) => (
-                                    <List.Item key={item.email}>
-                                        <List.Item.Meta
-                                            avatar={
-                                                <Badge>
-                                                    {/* <Avatar src={item.picture.large} /> */}
-                                                    <WarningFilled style={{color: '#0083FC'}} />
-                                                </Badge>}
-                                            title={<div>{item.title}</div>}
-                                            description={<div>
-                                                <div className='notification-des'>{item.content}</div>
-                                                <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
-                                            </div>}
-                                        />
-                                        <img src={UnreadIcon} />
-                                    </List.Item>
+                                    <Link to={{ pathname: `/camera_detail/${item.camera.id}` }} >
+                                        <List.Item key={item.email} onClick={() => handleOnClickNotification(item.id)}>
+                                            <List.Item.Meta
+                                                avatar={
+                                                    <Badge>
+                                                        <WarningFilled style={{ color: '#0083FC' }} />
+                                                    </Badge>}
+                                                title={<div>{item.title}</div>}
+                                                description={<div>
+                                                    <div className='notification-des'>{item.content}</div>
+                                                    <div className='notification-time'>{new Date(item.time).toLocaleDateString()}</div>
+                                                </div>}
+                                            />
+                                            <img src={UnreadIcon} />
+                                        </List.Item>
+                                    </Link>
+
                                 )}
                             </VirtualList>
                         </List>
