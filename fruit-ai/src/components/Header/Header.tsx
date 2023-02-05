@@ -4,6 +4,9 @@
 import Icon from '@ant-design/icons'
 import { Avatar, Badge, Button, Dropdown, Input, MenuProps } from 'antd'
 import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { WarehouseRequest } from '../../common/define-fruit'
+import Utils from '../../common/utils'
 import NotificationIcon from '../../images/Notification_icon.png'
 import AddCamera from '../../images/add_video.png'
 import IconSearch from '../../images/icon_search.png'
@@ -13,14 +16,10 @@ import AddCameraModel from '../../pages/Camera/AddCameraModel'
 import LoginModal from '../../pages/Login/LoginModal'
 import Notification from '../../pages/Notification/Notification'
 import RegisterModal from '../../pages/Registration/RegisterModal'
-import './header.css'
-import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
-import Utils from '../../common/utils'
-import { WarehouseRequest } from '../../common/define-fruit'
 import { getAllWarehouseByUserIdRequest } from '../../redux/controller/fruit.slice'
-import { Link } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
-
+import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
+import SideBar from '../SideBar/SideBar'
+import './header.scss'
 // import CRegisterModal from './CRegisterModal';
 
 interface MyProps {
@@ -29,9 +28,6 @@ interface MyProps {
 
 
 export const Header = (props: MyProps) => {
-
-
-    
 
     const [isLogin, setIsLogin] = useState<string>('')
     const [isOpenLoginModal, setIsOpenLoginModal] = useState<boolean>(false) // Biến kiểm tra đang mở modal login hay chưa
@@ -42,8 +38,9 @@ export const Header = (props: MyProps) => {
     const [userName, setUserName] = useState<string>('')
     const [userEmail, setUserEmail] = useState<string>('')
     // const [numberOfUnseenNotification,setNumberOfUnseenNotification] = useState(9);
+    const [open, setOpen] = useState(false);
 
-    const { lstNotification, numberOfUnseenNotification} = useSelectorRoot((state) => state.notification);
+    const { lstNotification, numberOfUnseenNotification } = useSelectorRoot((state) => state.notification);
 
 
     const dispatch = useDispatchRoot();
@@ -71,9 +68,9 @@ export const Header = (props: MyProps) => {
     //     return countInter
     // }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(numberOfUnseenNotification)
-    },[lstNotification])
+    }, [lstNotification])
 
 
 
@@ -142,8 +139,6 @@ export const Header = (props: MyProps) => {
         },
     ];
 
-    
-
     // Hàm chuyển đổi trạng thái đóng mở modal login
     const toggleLoginModal = () => {
         setIsOpenLoginModal(!isOpenLoginModal);
@@ -166,9 +161,22 @@ export const Header = (props: MyProps) => {
         setIsOpenNotification(false);
     };
 
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
+
     return (
         <div className='k-main-header'>
             <div className='k-header-content'>
+                <div className='header-content-logo' onClick={showDrawer}>
+                    LOGO
+                </div>
+
                 <div className='header-content-input'>
                     <Input
                         className='search-input'
@@ -204,7 +212,7 @@ export const Header = (props: MyProps) => {
                             <Notification
                                 isOpenModal={isOpenNotification}
                                 toggleNotification={toggleNotification}
-                                
+
                             />
                             <Dropdown menu={{ items }} placement="bottomLeft" arrow>
                                 <Avatar className='header-avatar' src={UserIcon} />
@@ -234,6 +242,11 @@ export const Header = (props: MyProps) => {
                     }
                 </div>
             </div>
+            <SideBar
+                onClose={onClose}
+                open={open}
+            />
+
         </div>
 
     )

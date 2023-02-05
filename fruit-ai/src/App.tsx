@@ -1,5 +1,6 @@
 import { Layout } from 'antd'
 import 'antd/dist/reset.css'
+import './App.scss'
 import { Route, Routes } from 'react-router-dom'
 import { Header } from './components/Header/Header'
 import SideBar from './components/SideBar/SideBar'
@@ -41,7 +42,7 @@ const App = () => {
 
     useEffect(() => {
 
-        getAllNotification();
+        // getAllNotification();
         
         const warehouseId = localStorage.getItem('warehouseId') ? localStorage.getItem('warehouseId') : '';
         if (warehouseId) {
@@ -69,7 +70,7 @@ const App = () => {
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            {clickedWareHouseId ? <SideBar /> : <></>}
+            {/* {clickedWareHouseId ? <SideBar /> : <></>} */}
             {/* <SideBar /> */}
             <Layout className="site-layout">
                 <Header />

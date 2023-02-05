@@ -3,7 +3,7 @@ import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './PackStyle.css';
+import './PackStyle.scss';
 
 interface DataType {
     key: React.Key;
@@ -105,10 +105,10 @@ const CPackManager = () => {
     };
     const hasSelected = selectedRowKeys.length > 0;
     return (
-        <div style={{ margin: '0px 16px' }}>
+        <div className='main-pack' >
             <div className='main-title'>Danh sách lô ()</div>
             <div>
-                <div style={{ marginBottom: 16 }}>
+                <div className='button-select-all' >
                     <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
                         Xóa nhiều
                     </Button>

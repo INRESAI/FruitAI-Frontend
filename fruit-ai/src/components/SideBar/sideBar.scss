@@ -1,0 +1,118 @@
+.ant-drawer {
+    .ant-drawer-mask {
+        background: none !important;
+        ;
+    }
+
+    .ant-drawer-content-wrapper {
+        width: 200px !important;
+
+        .ant-drawer-content {
+            .ant-drawer-wrapper-body {
+                .ant-drawer-header {
+                    padding: 14px 24px;
+
+                    .ant-drawer-header-title {
+                        .ant-drawer-title {
+                            text-align: center;
+                            background: white;
+                            font-family: 'Lexend Deca';
+                            font-style: normal;
+                            font-weight: bold;
+                            font-size: 24px;
+                            color: #1dce00;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .ant-drawer-body {
+                    padding: 0;
+
+                    .ant-menu {
+                        height: 100%;
+
+                        .ant-menu-item {
+                            margin-top: 0 !important;
+                            font-family: 'Lexend Deca' !important;
+                            font-style: normal !important;
+                            font-weight: 500 !important;
+                            font-size: 16px !important;
+                            line-height: 24px !important;
+                            color: #858585 !important;
+                            margin-bottom: 15px !important;
+
+                            .ant-menu-title-content {
+                                img {
+                                    height: 24px;
+                                    width: 24px;
+                                    line-height: 24px;
+                                    margin-bottom: 5px;
+                                    margin-right: 5px;
+                                }
+
+                                .sidebar-logo {
+                                    margin: 0;
+                                }
+                            }
+                        }
+
+                        .ant-menu-item-active {
+                            border-radius: 15px !important;
+                        }
+
+                        .ant-menu-item.ant-menu-item-selected {
+                            background: #1dce00 !important;
+                            color: white !important;
+                            border-radius: 15px !important;
+                            padding-left: 24px !important;
+                            border: none !important;
+                            transition: all 0.1s !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.main-sidebar.close {
+    .ant-layout-sider-children {
+        background: #f5f5f5;
+    }
+}
+
+.ant-layout-sider-trigger {
+    border-right: 1px solid #dfdfdf;
+    background-color: white;
+    color: #1dce00;
+}
+
+.ant-menu-inline.ant-menu-selected::after,
+.ant-menu-inline .ant-menu-item-selected::after {
+    display: none;
+}
+
+@media (max-width: 1900px) {
+    .ant-drawer {
+        z-index: 1;
+        .ant-drawer-content-wrapper {
+            box-shadow: none !important;
+            .ant-drawer-content {
+                .ant-drawer-wrapper-body {
+                    .ant-drawer-body {
+                        padding-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media (max-width: 900px) {
+    .ant-drawer {
+        z-index: 1000;
+        
+    }
+}

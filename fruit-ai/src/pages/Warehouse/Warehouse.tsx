@@ -84,7 +84,7 @@ const Warehouse = () => {
                                 <TableCell align="center">Tên kho</TableCell>
                                 <TableCell align="center">Địa chỉ</TableCell>
                                 <TableCell align="center">Mặc định</TableCell>
-                                <TableCell align="center">Thao tác</TableCell>
+                                <TableCell align="center" style={{width: 150}}>Thao tác</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

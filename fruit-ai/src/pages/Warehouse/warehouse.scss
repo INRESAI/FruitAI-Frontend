@@ -1,5 +1,7 @@
 .warehouse-main {
     padding: 30px;
+    margin-left: 200px;
+    z-index: 2;
 
     .warehouse-title {
         display: flex;
@@ -74,18 +76,176 @@
             }
         }
 
-        .MuiTableBody-root{
-            .MuiTableRow-root{
+        .MuiTableBody-root {
+            .MuiTableRow-root {
                 height: 55px;
                 cursor: pointer;
-                .MuiTableCell-root{
+
+                .MuiTableCell-root {
                     border: none;
                 }
             }
-            .MuiTableRow-root:hover{
+
+            .MuiTableRow-root:hover {
                 background-color: #eeffea;
             }
         }
 
+    }
+}
+
+@media (max-width: 1200px) {
+    .warehouse-main {
+
+        .warehouse-title {
+
+            .title-text {
+                font-size: 20px;
+            }
+        }
+
+        .warehouse-table {
+            .MuiTableHead-root {
+                .MuiTableCell-root {
+                    font-size: 15px;
+                }
+            }
+
+            .MuiTableBody-root {
+                .MuiTableRow-root {
+                    .MuiTableCell-root {
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .default-button {
+                .default-button-text {
+                    font-size: 14px;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .warehouse-main {
+
+        .warehouse-title {
+
+            .title-text {
+                font-size: 20px;
+            }
+        }
+
+        .warehouse-table {
+            .MuiTableHead-root {
+                .MuiTableCell-root {
+                    font-size: 14px;
+                }
+
+                .MuiTableCell-root:last-child {
+                    width: 130px !important;
+                }
+            }
+
+            .MuiTableBody-root {
+                .MuiTableRow-root {
+                    .MuiTableCell-root {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .default-button {
+                .default-button-text {
+                    font-size: 12px;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .warehouse-main {
+        margin: 0;
+
+        .warehouse-title {
+
+            .title-text {
+                font-size: 24px;
+            }
+        }
+
+        .warehouse-table {
+            .MuiTableHead-root {
+                .MuiTableCell-root {
+                    font-size: 16px;
+                }
+
+                .MuiTableCell-root:last-child {
+                    width: 150px !important;
+                }
+            }
+
+            .MuiTableBody-root {
+                .MuiTableRow-root {
+                    .MuiTableCell-root {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .default-button {
+                .default-button-text {
+                    font-size: 14px;
+                }
+            }
+
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .warehouse-main {
+        .warehouse-title {
+
+            .title-text {
+                font-size: 24px;
+            }
+        }
+
+        .warehouse-table {
+            .css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+                .css-rqglhn-MuiTable-root {
+                    width: 650px;
+                    .MuiTableHead-root {
+                        .MuiTableCell-root {
+                            font-size: 14px;
+                        }
+    
+                        .MuiTableCell-root:last-child {}
+                    }
+    
+                    .MuiTableBody-root {
+                        .MuiTableRow-root {
+                            .MuiTableCell-root {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+    
+                    .default-button {
+                        .default-button-text {
+                            font-size: 12px;
+                        }
+                    }
+                }
+
+            }
+
+        }
     }
 }
