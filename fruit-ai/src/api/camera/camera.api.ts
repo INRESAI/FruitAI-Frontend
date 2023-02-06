@@ -36,4 +36,11 @@ export default class CameraAPI {
             map((res) => res as IGetCameraManage)
         );;
     }
+
+    static deleteCameraById(cameraId: string): Observable<IGetCameraManage>{
+        console.log('co ai o day khong nheS')
+        return HttpClient.delete(`${CameraAPI.host}/camera/${cameraId}`).pipe(
+            map((res) => res as IGetCameraManage)
+        );
+    }
 }

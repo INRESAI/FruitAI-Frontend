@@ -11,6 +11,7 @@ import CameraAPI from "../../api/camera/camera.api";
 import StreamAPI from "../../api/camera/streaming.api";
 // import { importPigFromAI } from "../../api/pig";
 import { RootEpic } from "../../common/define-type";
+import { notification } from "antd";
 // import openNotification, { NotificationType } from "../../components/common/notification/Notification";
 // import { IImportPig, IImportPigExpanded } from "../../types/pig";
 
@@ -113,13 +114,32 @@ const cameraSlice = createSlice({
             if (index !== -1) state.listCamera[index] = action.payload;
 
         },
-        deleteCameraRequest: (state, action: PayloadAction<IGetCameraManage>) => {
+
+
+        //Delete cam request
+        deleteCameraRequest: (state, action: PayloadAction<string>) => {
             state.isLoading = true
         },
         deleteCameraSuccess: (state, action: PayloadAction<string>) => {
             state.isLoading = false
             state.listCamera.splice(state.listCamera.findIndex((arrow) => arrow.id === action.payload), 1);
-
+            notification.open({
+                message: 'Xoá camera thành công',
+                type: "success",
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            });
+        },
+        deleteCameraFail: (state) => {
+            state.isLoading = false;
+            notification.open({
+                message: 'Xoá camera thất bại',
+                type: 'error',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+            });
         },
 
         //Get Camera
@@ -277,12 +297,33 @@ const getCameraById$: RootEpic = (action$: any) => action$.pipe(
     })
 )
 
+const deleteCameraById$: RootEpic = (action$: any) => action$.pipe(
+    filter(deleteCameraRequest.match),
+    switchMap((action: any) => {
+        // const queryString = Utils.querySearchToString(action.payload)
+        console.log(action.payload);
+        const queryString = action.payload;
+
+        return CameraAPI.deleteCameraById(queryString).pipe(
+            map((res: any) => {
+                console.log(res);
+                return [
+                    cameraSlice.actions.deleteCameraSuccess(action.payload),
+                    // cameraSlice.actions.fetchListCameraRequest(action.payload)
+                ]
+            }), catchError((err) => {
+                return [cameraSlice.actions.deleteCameraFail()]
+            })
+        )
+    })
+)
 
 export const CameraEpics = [
     fetchListCamera$,
     restartAnalysisCamera$,
     addNewCamera$,
-    getCameraById$
+    getCameraById$,
+    deleteCameraById$
 ]
 
 export const {

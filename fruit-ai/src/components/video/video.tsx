@@ -134,7 +134,8 @@ const Video: FC = () => {
     const { listCamera, errorCode } = useSelectorRoot((state) => state.camera);
 
     useEffect(()=>{
-        const warehouseId = "63b542fe87dd5b2cfc063f5b" // tam thoi fix cung
+        const warehouseId = localStorage.getItem("warehouseId")?.replaceAll('"','') 
+        console.log(warehouseId)// tam thoi fix cung
         dispatch(fetchListCameraRequest(warehouseId));
     },[])
 

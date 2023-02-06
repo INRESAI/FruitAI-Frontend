@@ -32,6 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatchRoot, useSelectorRoot } from '../../redux/store'
 import { IGetCameraManage } from '../../common/models/camera-model'
 import { getCameraByIdRequest } from '../../redux/controller'
+import DeleteCamera from './DeleteCamera'
 
 interface DataType {
     title?: string;
@@ -152,6 +153,7 @@ const CameraDetail = (props: any) => {
     const [count, setCount] = useState<number>(5)
     const [step, setStep] = useState<number>(5)
     const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+    const [isOpenModelDelete,setIsOpenModelDelete] = useState(false);
 
     const dispatch = useDispatchRoot()
 
@@ -186,6 +188,10 @@ const CameraDetail = (props: any) => {
         }
     }, [step])
 
+    const toggle = () => {
+        setIsOpenModelDelete(!isOpenModelDelete)
+    }
+
 
     const showDetailInforOfCamera = (currentCamera: any) => {
         console.log(currentCamera)
@@ -199,7 +205,7 @@ const CameraDetail = (props: any) => {
                         <img alt='' src={EditIcon} /> 
 
                         {/* Icon xóa camera */}
-                        <img alt='' src={DeleteIcon} />
+                        <img alt=''  onClick={()=> setIsOpenModelDelete(true)} src={DeleteIcon} />
                     </div>
                 </Title>
                 <div className='camera-detail-date'>
@@ -247,6 +253,14 @@ const CameraDetail = (props: any) => {
     ) : null;
     return (
         <div className='camera-detail-main'>
+            {
+                cameraId && 
+                <DeleteCamera
+                    isOpenModelDelete= {isOpenModelDelete}
+                    toggle = {toggle}
+                    cameraId={cameraId}
+                />
+            }
             <div className='camera-detail-left'>
                 {/* <Image className='camera-detail-image' preview={false} alt="example" src={cameraDetailImage} /> */}
                 {
